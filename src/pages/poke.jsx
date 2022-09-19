@@ -9,12 +9,12 @@ const Poke = () => {
   const [PokeState, setPokeState] = useState([]);
 
   useEffect(() => {
-    console.log(`${pokeEndPoint}/${pokeId}`);
+    console.log(`${pokeEndPoint}/${pokeId}`, "pokemon endpoint /id");
     fetch(`${pokeEndPoint}/${pokeId}`).then((res) => {
       // ERROR: .JSON()
       res.json().then((data) => {
         setPokeState(data);
-        console.log(data);
+        console.log(data, "data");
       });
     });
   }, [pokeId]);

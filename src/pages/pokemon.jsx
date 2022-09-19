@@ -43,12 +43,12 @@ const Pokemon = () => {
 
   const handleGenerationSelected = (g) => {
     const generation = Number(g);
-    console.log(generation);
+    console.log(generation, "generation");
     fetch(`https://pokeapi.co/api/v2/generation/${generation}`).then((res) => {
       res.json().then((data) => {
-        console.log(data.id);
-        console.log(data.names);
-        console.log(data.pokemon_species);
+        console.log(data.id, "data.id");
+        console.log(data.names, "data.names");
+        console.log(data.pokemon_species, "data.pokemon_species");
         setPokemonState(data.pokemon_species);
         // filteredPokemon = data.pokemon_species;
         console.log(filteredPokemon, "filtered pokemon after g selection");
@@ -109,9 +109,12 @@ const Pokemon = () => {
                     {/* <button onClick={() => handlePokeSelected(p.url)}>
                       View
                     </button> */}
-                    {p.url.match(/(?<=pokemon\/)\d[^\/]*/)[0]}
+
+                    {/* LINK CAUSES GENERATION FILTER ERROR */}
                     <Link
-                      to={`/pokemon/${p.url.match(/(?<=pokemon\/)\d[^\/]*/)[0]}`}
+                      to={`/pokemon/${
+                        p.url.match(/(?<=pokemon\/)\d[^\/]*/)[0]
+                      }`}
                       className="btn btn-info"
                     >
                       View
