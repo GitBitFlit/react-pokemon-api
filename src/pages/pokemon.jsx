@@ -24,12 +24,17 @@ const Pokemon = () => {
     });
   }, []);
 
-  // const handlePokeSelected = (pokeURL) => {
-  //   // console.log(pokeURL);
-  //   console.log(pokeURL, "PokeURL");
-  //   const id = pokeURL.match(/(?<=pokemon\/)\d[^\/]*/)[0]; // regex returns an array
-  //   console.log("id", id, "id here");
-  // };
+  const handlePokeSelected = (pokeURL) => {
+    // console.log(pokeURL);
+    console.log(pokeURL, "PokeURL");
+    console.log(
+      pokeURL.includes("pokemon-species"),
+      "pokemon-species included"
+    );
+    const id = pokeURL.match(/(?<=pokemon\/)\d[^\/]*/)[0]; // regex returns an array
+    console.log("id", id, "id here");
+    // to={`/pokemon/${p.url.match(/(?<=pokemon\/)\d[^\/]*/)[0]}`}
+  };
 
   let filteredPokemon = pokemonState;
   if (searchQuery) {
@@ -112,8 +117,13 @@ const Pokemon = () => {
 
                     {/* LINK CAUSES GENERATION FILTER ERROR */}
                     <Link
+                      onClick={() => {
+                        handlePokeSelected(p.url);
+                      }}
                       to={`/pokemon/${
-                        p.url.match(/(?<=pokemon\/)\d[^\/]*/)[0]
+                        p.url.includes("pokemon-species")
+                          ? p.url.match(/(?<=pokemon-species\/)\d[^\/]*/)[0]
+                          : p.url.match(/(?<=pokemon\/)\d[^\/]*/)[0]
                       }`}
                       className="btn btn-info"
                     >
