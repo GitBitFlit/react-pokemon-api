@@ -46,9 +46,18 @@ const Poke = () => {
       // ERROR: .JSON()
       res.json().then((data) => {
         setSecondPokeState(data.results);
+        displayComparison();
         // console.log(data, "data");
       });
     });
+  };
+
+  const displayComparison = () => {
+    <div>
+      <td>{secondPokeState.name}</td>
+      <td>{secondPokeState.height}</td>
+      <td>{secondPokeState.weight}</td>
+    </div>;
   };
 
   if (isComparisonState) {
@@ -98,11 +107,7 @@ const Poke = () => {
                 <td>{pokeState.height}</td>
                 <td>{pokeState.weight}</td>
               </tr>
-              <tr>
-                <td>{secondPokeState.name}</td>
-                <td>{secondPokeState.height}</td>
-                <td>{secondPokeState.weight}</td>
-              </tr>
+              <tr>{displayComparison()}</tr>
             </tbody>
           </table>
           <table className="table">
