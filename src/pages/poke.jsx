@@ -7,6 +7,7 @@ const Poke = () => {
   // ERROR: name needs to match index.js Route path param name
   const { pokeId } = useParams();
   const [PokeState, setPokeState] = useState([]);
+  const [isComparisonState, setIsComparisonState] = useState(false);
 
   useEffect(() => {
     console.log(`${pokeEndPoint}/${pokeId}`, "pokemon endpoint /id");
@@ -19,42 +20,107 @@ const Poke = () => {
     });
   }, [pokeId]);
 
-  return (
-    <div>
-      Poke detail
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Height (unit)</th>
-            <th>Weight (unit)</th>
-            <th>Other</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{PokeState.name}</td>
-            <td>{PokeState.height}</td>
-            <td>{PokeState.weight}</td>
-          </tr>
-        </tbody>
-      </table>
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Stats</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            {/* <td>map through </td>
+  const handleComparePokemon = () => {
+    isComparisonState
+      ? setIsComparisonState(false)
+      : setIsComparisonState(true);
+  };
+
+  if (isComparisonState) {
+    return (
+      <>
+      <div>
+        Select <select>
+            <option></option>
+        </select>
+      </div>
+        <div>
+          <button className="btn btn-danger m-3" onClick={handleComparePokemon}>
+            Cancel
+          </button>
+        </div>
+        <div>
+          Poke detail
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Height (unit)</th>
+                <th>Weight (unit)</th>
+                <th>Other</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{PokeState.name}</td>
+                <td>{PokeState.height}</td>
+                <td>{PokeState.weight}</td>
+              </tr>
+            </tbody>
+          </table>
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Stats</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                {/* <td>map through </td>
             {PokeState.stats.map?.((ps) => {
               return <p> (ps.base_stat)</p>;
             })} */}
-          </tr>
-        </tbody>
-      </table>
-    </div>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <div>
+        <button className="btn btn-info m-3" onClick={handleComparePokemon}>
+          Compare
+        </button>
+      </div>
+      <div>
+        Poke detail
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Height (unit)</th>
+              <th>Weight (unit)</th>
+              <th>Other</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{PokeState.name}</td>
+              <td>{PokeState.height}</td>
+              <td>{PokeState.weight}</td>
+            </tr>
+          </tbody>
+        </table>
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Stats</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              {/* <td>map through </td>
+            {PokeState.stats.map?.((ps) => {
+              return <p> (ps.base_stat)</p>;
+            })} */}
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 };
 
