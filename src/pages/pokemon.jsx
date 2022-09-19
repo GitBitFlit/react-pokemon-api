@@ -97,7 +97,7 @@ const Pokemon = () => {
             <tr>
               <th>Pokemon</th>
               <th>URL</th>
-              <th>Generation</th>
+              {/* <th>Generation</th> */}
               <th></th>
               <th></th>
             </tr>
@@ -108,7 +108,7 @@ const Pokemon = () => {
                 <tr key={p.url}>
                   <td>{p.name}</td>
                   <td>{p.url}</td>
-                  <td>Map generation here?</td>
+                  {/* <td>Map generation here?</td> */}
                   <td>{/* <i className="fa-solid fa-heart"></i> */}</td>
                   <td>
                     {/* <button onClick={() => handlePokeSelected(p.url)}>
