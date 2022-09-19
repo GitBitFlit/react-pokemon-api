@@ -1,6 +1,7 @@
 // import React from "react"
 import { useState, useEffect } from "react";
-// import { FontAwesomeIcon } from 'font-awesome'
+import { Link } from "react-router-dom";
+// import { FontAwesomeIcon } from "font-awesome";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 // const pokemonEndPoint = "https://pokeapi.co/api/v2/pokemon/";
@@ -11,7 +12,7 @@ const Pokemon = () => {
   const [pokemonState, setPokemonState] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedGeneration, setSelectedGeneration] = useState("All");
-  const [filterGeneration, setFilterGeneration] = useState("All");
+  // const [filterGeneration, setFilterGeneration] = useState("All");
 
   useEffect(() => {
     fetch(pokemonEndPoint).then((res) => {
@@ -23,9 +24,17 @@ const Pokemon = () => {
     });
   }, []);
 
-  const handlePokeSelected = (pokeURL) => {
-    console.log(pokeURL);
-  };
+  // const handlePokeSelected = (pokeURL) => {
+  //   // console.log(pokeURL);
+  //   console.log(pokeURL, "PokeURL");
+  //   console.log(
+  //     pokeURL.includes("pokemon-species"),
+  //     "pokemon-species included"
+  //   );
+  //   const id = pokeURL.match(/(?<=pokemon\/)\d[^\/]*/)[0]; // regex returns an array
+  //   console.log("id", id, "id here");
+  //   // to={`/pokemon/${p.url.match(/(?<=pokemon\/)\d[^\/]*/)[0]}`}
+  // };
 
   let filteredPokemon = pokemonState;
   if (searchQuery) {
@@ -39,12 +48,12 @@ const Pokemon = () => {
 
   const handleGenerationSelected = (g) => {
     const generation = Number(g);
-    console.log(generation);
+    console.log(generation, "generation");
     fetch(`https://pokeapi.co/api/v2/generation/${generation}`).then((res) => {
       res.json().then((data) => {
-        console.log(data.id);
-        console.log(data.names);
-        console.log(data.pokemon_species);
+        console.log(data.id, "data.id");
+        console.log(data.names, "data.names");
+        console.log(data.pokemon_species, "data.pokemon_species");
         setPokemonState(data.pokemon_species);
         // filteredPokemon = data.pokemon_species;
         console.log(filteredPokemon, "filtered pokemon after g selection");
@@ -89,6 +98,8 @@ const Pokemon = () => {
               <th>Pokemon</th>
               <th>URL</th>
               <th>Generation</th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -98,15 +109,23 @@ const Pokemon = () => {
                   <td>{p.name}</td>
                   <td>{p.url}</td>
                   <td>Map generation here?</td>
+                  <td>{/* <i className="fa-solid fa-heart"></i> */}</td>
                   <td>
-                    <button
-                      onClick={() => {
-                        handlePokeSelected(p.url);
-                      }}
+                    {/* <button onClick={() => handlePokeSelected(p.url)}>
+                      View
+                    </button> */}
+
+                    {/* LINK CAUSES GENERATION FILTER ERROR */}
+                    <Link
+                      to={`/pokemon/${
+                        p.url.includes("pokemon-species")
+                          ? p.url.match(/(?<=pokemon-species\/)\d[^\/]*/)[0]
+                          : p.url.match(/(?<=pokemon\/)\d[^\/]*/)[0]
+                      }`}
                       className="btn btn-info"
                     >
                       View
-                    </button>
+                    </Link>
                   </td>
                 </tr>
               );
