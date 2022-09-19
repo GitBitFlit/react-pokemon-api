@@ -8,6 +8,7 @@ const Poke = () => {
   // ERROR: name needs to match index.js Route path param name
   const { pokeId } = useParams();
   const [pokeState, setPokeState] = useState([]);
+  const [secondPokeId, setSecondPokeId] = useState("");
   const [secondPokeState, setSecondPokeState] = useState([]);
   const [pokemonState, setPokemonState] = useState([]);
   const [isComparisonState, setIsComparisonState] = useState(false);
@@ -31,62 +32,52 @@ const Poke = () => {
   }, [pokeId]);
 
   const handleComparePokemon = () => {
-    isComparisonState
-      ? setIsComparisonState(false)
-      : setIsComparisonState(true);
+    // isComparisonState
+    //   ? setIsComparisonState(false)
+    //   : setIsComparisonState(true);
+
+    setIsComparisonState(true);
+  };
+
+  const handleCancelComparison = () => {
+    setIsComparisonState(false);
+    setSecondPokeState([]);
   };
 
   const handleSecondPokemonSelected = (event) => {
-    const secondPokeId = event.currentTarget.value; // conver to numnber??
-    console.log(secondPokeState); // ??? has it loaded
+    const secondPokeId = Number(event.currentTarget.value); // conver to numnber??
+    console.log(typeof secondPokeId, "second poke id"); // ??? has it loaded
     console.log(event.currentTarget.value);
 
     console.log(`${pokeEndPoint}/${secondPokeId}`, "2nd pokemon url");
-    fetch(`${pokeEndPoint}/${secondPokeState}`).then((res) => {
+    fetch(`${pokeEndPoint}/${secondPokeId}`).then((res) => {
       // ERROR: .JSON()
       res.json().then((data) => {
-        setSecondPokeState(data.results);
-        displayComparison();
+        console.log(data, "data");
+        setSecondPokeState(data);
+        console.log(secondPokeState, "second poke state");
+        // displayComparison();
         // console.log(data, "data");
       });
     });
   };
 
-  const displayComparison = () => {
-    <div>
-      <td>{secondPokeState.name}</td>
-      <td>{secondPokeState.height}</td>
-      <td>{secondPokeState.weight}</td>
-    </div>;
-  };
+  //   const displayComparison = () => {
+  //     <div>
+  //       <td>{secondPokeState.name}</td>
+  //       <td>{secondPokeState.height}</td>
+  //       <td>{secondPokeState.weight}</td>
+  //     </div>;
+  //   };
 
   if (isComparisonState) {
     return (
       <>
         <div>
-          Select a Pokemon to Compare
-          <select onChange={handleSecondPokemonSelected}>
-            {" "}
-            <option>Pokemon</option>
-            {pokemonState?.map((p) => {
-              return (
-                <option
-                  key={p.url}
-                  value={
-                    p.url.includes("pokemon-species")
-                      ? p.url.match(/(?<=pokemon-species\/)\d[^\/]*/)[0]
-                      : p.url.match(/(?<=pokemon\/)\d[^\/]*/)[0]
-                  }
-                >
-                  {p.name}
-                </option>
-              );
-            })}
-            <option></option>
-          </select>
-        </div>
-        <div>
-          <button className="btn btn-danger m-3" onClick={handleComparePokemon}>
+          <button
+            className="btn btn-danger m-3"
+            onClick={handleCancelComparison}
+          >
             Cancel
           </button>
         </div>
@@ -107,7 +98,12 @@ const Poke = () => {
                 <td>{pokeState.height}</td>
                 <td>{pokeState.weight}</td>
               </tr>
-              <tr>{displayComparison()}</tr>
+              <tr>
+                {/* {displayComparison()} */}
+                <td>{secondPokeState.name}</td>
+                <td>{secondPokeState.height}</td>
+                <td>{secondPokeState.weight}</td>
+              </tr>
             </tbody>
           </table>
           <table className="table">
@@ -132,6 +128,29 @@ const Poke = () => {
 
   return (
     <>
+      <div>
+        Select a Pokemon to Compare
+        <select onChange={handleSecondPokemonSelected}>
+          {" "}
+          <option>Pokemon</option>
+          {pokemonState?.map((p) => {
+            return (
+              <option
+                key={p.url}
+                value={
+                  p.url.includes("pokemon-species")
+                    ? p.url.match(/(?<=pokemon-species\/)\d[^\/]*/)[0]
+                    : p.url.match(/(?<=pokemon\/)\d[^\/]*/)[0]
+                }
+              >
+                {p.name}
+              </option>
+            );
+          })}
+          <option></option>
+        </select>
+      </div>
+
       <div>
         <button className="btn btn-info m-3" onClick={handleComparePokemon}>
           Compare
