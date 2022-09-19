@@ -1,6 +1,7 @@
 // import React from "react"
 import { useState, useEffect } from "react";
-// import { FontAwesomeIcon } from 'font-awesome'
+import { Link } from "react-router-dom";
+// import { FontAwesomeIcon } from "font-awesome";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 // const pokemonEndPoint = "https://pokeapi.co/api/v2/pokemon/";
@@ -11,7 +12,7 @@ const Pokemon = () => {
   const [pokemonState, setPokemonState] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedGeneration, setSelectedGeneration] = useState("All");
-  const [filterGeneration, setFilterGeneration] = useState("All");
+  // const [filterGeneration, setFilterGeneration] = useState("All");
 
   useEffect(() => {
     fetch(pokemonEndPoint).then((res) => {
@@ -23,9 +24,12 @@ const Pokemon = () => {
     });
   }, []);
 
-  const handlePokeSelected = (pokeURL) => {
-    console.log(pokeURL);
-  };
+  // const handlePokeSelected = (pokeURL) => {
+  //   // console.log(pokeURL);
+  //   console.log(pokeURL, "PokeURL");
+  //   const id = pokeURL.match(/(?<=pokemon\/)\d[^\/]*/)[0]; // regex returns an array
+  //   console.log("id", id, "id here");
+  // };
 
   let filteredPokemon = pokemonState;
   if (searchQuery) {
@@ -89,6 +93,8 @@ const Pokemon = () => {
               <th>Pokemon</th>
               <th>URL</th>
               <th>Generation</th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -98,15 +104,18 @@ const Pokemon = () => {
                   <td>{p.name}</td>
                   <td>{p.url}</td>
                   <td>Map generation here?</td>
+                  <td>{/* <i className="fa-solid fa-heart"></i> */}</td>
                   <td>
-                    <button
-                      onClick={() => {
-                        handlePokeSelected(p.url);
-                      }}
+                    {/* <button onClick={() => handlePokeSelected(p.url)}>
+                      View
+                    </button> */}
+                    {p.url.match(/(?<=pokemon\/)\d[^\/]*/)[0]}
+                    <Link
+                      to={`/pokemon/${p.url.match(/(?<=pokemon\/)\d[^\/]*/)[0]}`}
                       className="btn btn-info"
                     >
                       View
-                    </button>
+                    </Link>
                   </td>
                 </tr>
               );
