@@ -12,6 +12,8 @@ const Pokemon = () => {
   const [pokemonState, setPokemonState] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedGeneration, setSelectedGeneration] = useState("All");
+  // should you always use state terminology https://reactjs.org/docs/hooks-rules.html#explanation
+  const [favouriteState, setFavouriteState] = useState([]);
   // const [filterGeneration, setFilterGeneration] = useState("All");
 
   useEffect(() => {
@@ -46,7 +48,28 @@ const Pokemon = () => {
   // filter by generation w/ number as id
   // https://pokeapi.co/api/v2/generation/2
 
+  const displayGenerationStatement = () => {
+    if (selectedGeneration === "All") {
+      return "Showing all Generations";
+    } else {
+      return `Showing Generation ${selectedGeneration}`;
+    }
+  };
+
   const handleGenerationSelected = (g) => {
+    // console.log(generation, "g here");
+    console.log(selectedGeneration, "g here");
+    if (selectedGeneration === g) {
+      // want to de-select and unformat selected button
+      fetch(pokemonEndPoint).then((res) => {
+        res.json().then((data) => {
+          setPokemonState(data.results);
+          setSelectedGeneration("All");
+        });
+      });
+      console.log("do nothing");
+      return;
+    }
     const generation = Number(g);
     console.log(generation, "generation");
     fetch(`https://pokeapi.co/api/v2/generation/${generation}`).then((res) => {
@@ -60,6 +83,13 @@ const Pokemon = () => {
         setSelectedGeneration(g);
       });
     });
+  };
+
+  const handleFavourite = (poke) => {};
+
+  // when do you call it handle... https://javascript.plainenglish.io/handy-naming-conventions-for-event-handler-functions-props-in-react-fc1cbb791364
+  const formatName = (name) => {
+    return name.charAt(0).toUpperCase() + name.slice(1);
   };
 
   // when mapping use .?
@@ -80,17 +110,60 @@ const Pokemon = () => {
         {/* <FontAwesomeIcon icon="fa-solid fa-magnifying-glass" /> */}
         {/* add a clear / cross button */}
       </div>
+
       <div>
-        <p>Showing generation {selectedGeneration}</p>
+        <p>{displayGenerationStatement()}</p>
         <button
           onClick={() => handleGenerationSelected(1)}
-          className="btn btn-dark"
+          className="btn btn-dark m-2"
         >
           Generation 1
         </button>
-        <button className="btn btn-dark">Generation 2</button>
+        <button
+          onClick={() => handleGenerationSelected(2)}
+          className="btn btn-dark m-2"
+        >
+          Generation 2
+        </button>
+        <button
+          onClick={() => handleGenerationSelected(3)}
+          className="btn btn-dark m-2"
+        >
+          Generation 3
+        </button>
+        <button
+          onClick={() => handleGenerationSelected(4)}
+          className="btn btn-dark m-2"
+        >
+          Generation 4
+        </button>
+        <button
+          onClick={() => handleGenerationSelected(5)}
+          className="btn btn-dark m-2"
+        >
+          Generation 5
+        </button>
+        <button
+          onClick={() => handleGenerationSelected(6)}
+          className="btn btn-dark m-2"
+        >
+          Generation 6
+        </button>
+        <button
+          onClick={() => handleGenerationSelected(7)}
+          className="btn btn-dark m-2"
+        >
+          Generation 7
+        </button>
+        <button
+          onClick={() => handleGenerationSelected(8)}
+          className="btn btn-dark m-2"
+        >
+          Generation 8
+        </button>
         {/* map buttons from BED? and set selected state / display somewhere */}
       </div>
+
       <div>
         <table className="table">
           <thead>
@@ -100,29 +173,38 @@ const Pokemon = () => {
               {/* <th>Generation</th> */}
               <th></th>
               <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
-            {filteredPokemon?.map((p) => {
+            {filteredPokemon?.map((poke) => {
               return (
-                <tr key={p.url}>
-                  <td>{p.name}</td>
-                  <td>{p.url}</td>
+                <tr key={poke.url}>
+                  <td>{formatName(poke.name)}</td>
+                  <td>{poke.url}</td>
                   {/* <td>Map generation here?</td> */}
                   <td>{/* <i className="fa-solid fa-heart"></i> */}</td>
+                  <td>
+                    <button
+                      onClick={() => {
+                        handleFavourite(poke.url);
+                      }}
+                      className="btn btn-danger m-3"
+                    >
+                      Favourite
+                    </button>
+                  </td>
                   <td>
                     {/* <button onClick={() => handlePokeSelected(p.url)}>
                       View
                     </button> */}
-
-                    {/* LINK CAUSES GENERATION FILTER ERROR */}
                     <Link
                       to={`/pokemon/${
-                        p.url.includes("pokemon-species")
-                          ? p.url.match(/(?<=pokemon-species\/)\d[^\/]*/)[0]
-                          : p.url.match(/(?<=pokemon\/)\d[^\/]*/)[0]
+                        poke.url.includes("pokemon-species")
+                          ? poke.url.match(/(?<=pokemon-species\/)\d[^\/]*/)[0]
+                          : poke.url.match(/(?<=pokemon\/)\d[^\/]*/)[0]
                       }`}
-                      className="btn btn-info"
+                      className="btn btn-info m-3"
                     >
                       View
                     </Link>
