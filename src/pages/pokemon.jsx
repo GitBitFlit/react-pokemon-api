@@ -13,7 +13,7 @@ const Pokemon = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedGeneration, setSelectedGeneration] = useState("All");
   // should you always use state terminology https://reactjs.org/docs/hooks-rules.html#explanation
-  const [favouriteState, setFavouriteState] = useState([]);
+  // const [favouriteState, setFavouriteState] = useState([]);
   // const [filterGeneration, setFilterGeneration] = useState("All");
 
   useEffect(() => {
@@ -203,8 +203,8 @@ const Pokemon = () => {
                     <Link
                       to={`/pokemon/${
                         poke.url.includes("pokemon-species")
-                          ? poke.url.match(/(?<=pokemon-species\/)\d[^\/]*/)[0]
-                          : poke.url.match(/(?<=pokemon\/)\d[^\/]*/)[0]
+                          ? poke.url.match(/(?<=pokemon-species\/)\d[^]*/)[0]
+                          : poke.url.match(/(?<=pokemon\/)\d[^]*/)[0]
                       }`}
                       className="btn btn-info m-3"
                     >
