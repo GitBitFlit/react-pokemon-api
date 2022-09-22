@@ -1,4 +1,10 @@
+import { useEffect } from "react";
+
 const Favourites = ({ favouritePokemon, onRemoveFromFavourites }) => {
+  useEffect(() => {
+    localStorage.getItem("favouritePokemon", JSON.stringify(favouritePokemon));
+  }, [favouritePokemon]);
+
   return (
     <>
       <div>Favourites</div>
@@ -6,27 +12,31 @@ const Favourites = ({ favouritePokemon, onRemoveFromFavourites }) => {
         enable click to view detail, remove button, show date added? <p />
         <br />
       </div>
-<table>
-  <thead><tr><th></th></tr></thead>
-  <tbody>{favouritePokemon.map((poke) => {
-        return (
+      <table>
+        <thead>
           <tr>
-            <td key={poke.url}>{poke.name}</td>
-            <td>
-              <button
-                onClick={() => {
-                  onRemoveFromFavourites(poke);
-                }}
-              >
-                Remove
-              </button>
-            </td>
+            <th></th>
           </tr>
-        );
-      })}</tbody>
-</table>
-
-      
+        </thead>
+        <tbody>
+          {favouritePokemon.map((poke) => {
+            return (
+              <tr>
+                <td key={poke.url}>{poke.name}</td>
+                <td>
+                  <button
+                    onClick={() => {
+                      onRemoveFromFavourites(poke);
+                    }}
+                  >
+                    Remove
+                  </button>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     </>
   );
 };

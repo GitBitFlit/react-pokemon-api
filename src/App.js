@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 // import ReactDOM from "react-dom/client";
 import { Routes, Route } from "react-router-dom";
 import "src/styles/index.css";
@@ -9,10 +9,15 @@ import Poke from "./pages/poke";
 import Favourites from "./pages/favourites";
 // import reportWebVitals from "./reportWebVitals";
 import "font-awesome/css/font-awesome.css";
-import { useState } from "react";
 
 function App() {
   const [favouritePokemon, setFavouritePokemon] = useState([]);
+
+  useEffect(() => {
+    localStorage.setItem("favouritePokemon", JSON.stringify(favouritePokemon));
+  }, [favouritePokemon]);
+
+
 
   const handleAddToFavourites = (poke) => {
     console.log(favouritePokemon, "fave poke");

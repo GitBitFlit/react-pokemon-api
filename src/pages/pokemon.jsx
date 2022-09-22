@@ -86,9 +86,9 @@ const Pokemon = ({ onAddToFavourites }) => {
     });
   };
 
-  const handleFavourite = (poke) => {
-    // pass up to app.js
-  };
+  // const handleFavourite = (poke) => {
+  //   // pass up to app.js
+  // };
 
   // when do you call it handle... https://javascript.plainenglish.io/handy-naming-conventions-for-event-handler-functions-props-in-react-fc1cbb791364
   const formatName = (name) => {
@@ -172,7 +172,7 @@ const Pokemon = ({ onAddToFavourites }) => {
           <thead>
             <tr>
               <th>Pokemon</th>
-              <th>URL</th>
+              {/* <th>URL</th> */}
               {/* <th>Generation</th> */}
               <th></th>
               <th></th>
@@ -184,7 +184,7 @@ const Pokemon = ({ onAddToFavourites }) => {
               return (
                 <tr key={poke.url}>
                   <td>{formatName(poke.name)}</td>
-                  <td>{poke.url}</td>
+                  {/* <td>{poke.url}</td> */}
                   {/* <td>Map generation here?</td> */}
                   <td>{/* <i className="fa-solid fa-heart"></i> */}</td>
                   <td>
