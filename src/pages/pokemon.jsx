@@ -85,7 +85,9 @@ const Pokemon = () => {
     });
   };
 
-  const handleFavourite = (poke) => {};
+  const handleFavourite = (poke) => {
+    // pass up to app.js
+  };
 
   // when do you call it handle... https://javascript.plainenglish.io/handy-naming-conventions-for-event-handler-functions-props-in-react-fc1cbb791364
   const formatName = (name) => {
@@ -187,7 +189,7 @@ const Pokemon = () => {
                   <td>
                     <button
                       onClick={() => {
-                        handleFavourite(poke.url);
+                        handleFavourite(poke);
                       }}
                       className="btn btn-danger m-3"
                     >

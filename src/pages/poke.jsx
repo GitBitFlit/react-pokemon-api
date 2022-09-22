@@ -45,7 +45,7 @@ const Poke = () => {
   };
 
   const handleSecondPokemonSelected = (event) => {
-    const secondPokeId = Number(event.currentTarget.value); // conver to numnber??
+    const secondPokeId = Number(event.currentTarget.value); // convert to numnber??
     console.log(typeof secondPokeId, "second poke id"); // ??? has it loaded
     console.log(event.currentTarget.value);
 
