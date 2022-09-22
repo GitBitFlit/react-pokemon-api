@@ -32,20 +32,31 @@ function App() {
 
   const handleRemoveFromFavourites = (poke) => {
     console.log(poke, "poke to remove from favourites");
+    // const index = favouritePokemon.findIndex((p) => p.url === poke.url);
+    // console.log(index, "index to remove");
+    // favouritePokemon.splice(index, 1);
+    // setFavouritePokemon(favouritePokemon);
+
+    let filteredFavouriteList = favouritePokemon.filter(
+      (p) => p.url !== poke.url
+    );
+    setFavouritePokemon(filteredFavouriteList);
   };
 
   return (
     <>
       <NavBar />
-      <div>
-        hello
-        {favouritePokemon?.map((p) => {
-          return <p>{p.name}</p>;
+
+      {/* <div>
+        {favouritePokemon.map((poke) => {
+          return (
+            <div>
+              <p key={poke.url}>{poke.name}</p>
+            </div>
+          );
         })}
-        {/* {favouritePokemon.name}
-        {favouritePokemon[0].name}
-        {favouritePokemon[1].name} */}
-      </div>
+      </div> */}
+
       <Routes>
         <Route path="/pokemon/:pokeId" element={<Poke />} />
         <Route

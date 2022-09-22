@@ -1,13 +1,24 @@
-const Favourites = ({ favouritePokemon }) => {
+const Favourites = ({ favouritePokemon, onRemoveFromFavourites }) => {
   return (
     <>
-      <div>favourites</div>
+      <div>Favourites</div>
       <div>
-        map favourited pokemon, enable click to view detail, remove button, show
-        date added?
+        enable click to view detail, remove button, show date added? <p />
+        <br />
       </div>
       {favouritePokemon.map((poke) => {
-        return <div>{poke.name}</div>;
+        return (
+          <div>
+            <p key={poke.url}>{poke.name}</p>
+            <button
+              onClick={() => {
+                onRemoveFromFavourites(poke);
+              }}
+            >
+              Remove
+            </button>
+          </div>
+        );
       })}
     </>
   );
