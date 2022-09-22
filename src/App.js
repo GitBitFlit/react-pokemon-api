@@ -11,16 +11,39 @@ import Favourites from "./pages/favourites";
 import "font-awesome/css/font-awesome.css";
 
 function App() {
-  const [favouritePokemon, setFavouritePokemon] = useState([]);
+  const storedPokemon =
+    JSON.parse(localStorage.getItem("favouritePokemon")) || [];
+  const [favouritePokemon, setFavouritePokemon] = useState(storedPokemon);
 
   useEffect(() => {
-    localStorage.setItem("favouritePokemon", JSON.stringify(favouritePokemon));
+    const data = window.localStorage.getItem("favouritePokemon");
+    console.log(data, "get data"); // why is it empty?
+    // setFavouritePokemon(JSON.parse(data));
+
+    if (data !== null) {
+      //   localStorage.getItem(
+      //     "favouritePokemon",
+      //     JSON.stringify(favouritePokemon)
+      //   );
+      setFavouritePokemon(JSON.parse(data));
+      console.log(favouritePokemon, "load persist storage");
+    }
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem(
+      "favouritePokemon",
+      JSON.stringify([...favouritePokemon])
+    );
+    //   }, [favouritePokemon]);
+    console.log(favouritePokemon, "useEffect set Fave Pokemon");
   }, [favouritePokemon]);
 
-
+  //   var retrievedObject = localStorage.getItem("favouritePokemon");
+  //   console.log("retrievedObject: ", JSON.parse(retrievedObject));
 
   const handleAddToFavourites = (poke) => {
-    console.log(favouritePokemon, "fave poke");
+    // console.log(favouritePokemon, "fave poke");
     const findPoke = favouritePokemon.find((p) => p.name === poke.name);
     if (!findPoke) {
       // const favePokemon = { ...favouritePokemon };
@@ -32,7 +55,7 @@ function App() {
     }
 
     // console.log(findPoke, "poke found?");
-    console.log(poke, "poke to add to favourites");
+    // console.log(poke, "poke to add to favourites");
   };
 
   const handleRemoveFromFavourites = (poke) => {

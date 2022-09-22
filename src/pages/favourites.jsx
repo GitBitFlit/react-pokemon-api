@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 
 const Favourites = ({ favouritePokemon, onRemoveFromFavourites }) => {
-  useEffect(() => {
-    localStorage.getItem("favouritePokemon", JSON.stringify(favouritePokemon));
-  }, [favouritePokemon]);
+  // useEffect(() => {
+  //   localStorage.getItem("favouritePokemon", JSON.stringify(favouritePokemon));
+  // }, [favouritePokemon]);
 
   return (
     <>
@@ -21,8 +21,8 @@ const Favourites = ({ favouritePokemon, onRemoveFromFavourites }) => {
         <tbody>
           {favouritePokemon.map((poke) => {
             return (
-              <tr>
-                <td key={poke.url}>{poke.name}</td>
+              <tr key={poke.url}>
+                <td>{poke.name}</td>
                 <td>
                   <button
                     onClick={() => {
