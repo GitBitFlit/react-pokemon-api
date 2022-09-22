@@ -15,8 +15,21 @@ function App() {
   const [favouritePokemon, setFavouritePokemon] = useState([]);
 
   const handleAddToFavourites = (poke) => {
+    console.log(favouritePokemon, "fave poke");
+    const findPoke = favouritePokemon.find((p) => p.name === poke.name);
+    if (!findPoke) {
+      // const favePokemon = { ...favouritePokemon };
+      // console.log(favePokemon);
+      // favePokemon.push(poke);
+
+      setFavouritePokemon((favouritePokemon) => [poke, ...favouritePokemon]);
+      // setFavouritePokemon(...favouritePokemon, poke);
+    }
+
+    // console.log(findPoke, "poke found?");
     console.log(poke, "poke to add to favourites");
   };
+
   const handleRemoveFromFavourites = (poke) => {
     console.log(poke, "poke to remove from favourites");
   };
@@ -24,6 +37,15 @@ function App() {
   return (
     <>
       <NavBar />
+      <div>
+        hello
+        {favouritePokemon?.map((p) => {
+          return <p>{p.name}</p>;
+        })}
+        {/* {favouritePokemon.name}
+        {favouritePokemon[0].name}
+        {favouritePokemon[1].name} */}
+      </div>
       <Routes>
         <Route path="/pokemon/:pokeId" element={<Poke />} />
         <Route
@@ -38,7 +60,7 @@ function App() {
           path="/favourites"
           element={
             <Favourites
-              favourites={favouritePokemon}
+              favouritePokemon={favouritePokemon}
               onRemoveFromFavourites={handleRemoveFromFavourites}
             />
           }
