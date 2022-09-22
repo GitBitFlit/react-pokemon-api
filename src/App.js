@@ -9,15 +9,40 @@ import Poke from "./pages/poke";
 import Favourites from "./pages/favourites";
 // import reportWebVitals from "./reportWebVitals";
 import "font-awesome/css/font-awesome.css";
+import { useState } from "react";
 
 function App() {
+  const [favouritePokemon, setFavouritePokemon] = useState([]);
+
+  const handleAddToFavourites = (poke) => {
+    console.log(poke, "poke to add to favourites");
+  };
+  const handleRemoveFromFavourites = (poke) => {
+    console.log(poke, "poke to remove from favourites");
+  };
+
   return (
     <>
       <NavBar />
       <Routes>
         <Route path="/pokemon/:pokeId" element={<Poke />} />
-        <Route path="/" element={<Pokemon />} />
-        <Route path="/favourites" element={<Favourites />} />
+        <Route
+          path="/"
+          element={
+            <Pokemon
+              onAddToFavourites={(poke) => handleAddToFavourites(poke)}
+            />
+          }
+        />
+        <Route
+          path="/favourites"
+          element={
+            <Favourites
+              favourites={favouritePokemon}
+              onRemoveFromFavourites={handleRemoveFromFavourites}
+            />
+          }
+        />
       </Routes>
     </>
   );

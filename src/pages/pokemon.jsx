@@ -8,7 +8,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // can update limit as required [1154]
 const pokemonEndPoint = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=1154";
 
-const Pokemon = () => {
+// or (props) and then props.onAddToFavourites below
+const Pokemon = ({ onAddToFavourites }) => { 
   const [pokemonState, setPokemonState] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedGeneration, setSelectedGeneration] = useState("All");
@@ -188,9 +189,7 @@ const Pokemon = () => {
                   <td>{/* <i className="fa-solid fa-heart"></i> */}</td>
                   <td>
                     <button
-                      onClick={() => {
-                        handleFavourite(poke);
-                      }}
+                      onClick={() => onAddToFavourites(poke)}
                       className="btn btn-danger m-3"
                     >
                       Favourite
