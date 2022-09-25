@@ -95,6 +95,15 @@ const Pokemon = ({ onAddToFavourites, onFavouriteClass }) => {
     return name.charAt(0).toUpperCase() + name.slice(1);
   };
 
+  // const faveClass = (poke) => {
+  //   // console.log("faveclass for pokemon");
+  //   return "fa fa-heart";
+  // };
+
+  const faveClass = (name) => {
+    return name === "ivysaur" ? "fa fa-heart" : "fa fa-heart-o";
+  };
+
   // when mapping use .?
   return (
     <>
@@ -198,7 +207,9 @@ const Pokemon = ({ onAddToFavourites, onFavouriteClass }) => {
                   <td>
                     <i
                       onClick={() => onAddToFavourites(poke)}
-                      className={onFavouriteClass}
+                      // className={onFavouriteClass}
+                      // className={faveClass}
+                      className={faveClass(poke.name)}
                     ></i>
                   </td>
                   <td>
