@@ -42,7 +42,6 @@ function App() {
   //   var retrievedObject = localStorage.getItem("favouritePokemon");
   //   console.log("retrievedObject: ", JSON.parse(retrievedObject));
   let handleFavouriteClass = "clickable fa fa-heart";
-  
 
   const handleAddToFavourites = (poke) => {
     // console.log(favouritePokemon, "fave poke");
@@ -75,6 +74,13 @@ function App() {
     setFavouritePokemon(filteredFavouriteList);
   };
 
+  const onFavouriteClass = (name) => {
+    const findPoke = favouritePokemon.find((p) => p.name === name);
+    // if (!findPoke) {
+    return findPoke ? "fa fa-heart" : "fa fa-heart-o";
+    // return "fa fa-heart";
+  };
+
   return (
     <>
       <NavBar />
@@ -96,7 +102,7 @@ function App() {
           element={
             <Pokemon
               onAddToFavourites={(poke) => handleAddToFavourites(poke)}
-              onFavouriteClass={handleFavouriteClass}
+              onFavouriteClass={(poke) => onFavouriteClass(poke)}
             />
           }
         />
