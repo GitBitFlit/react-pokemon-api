@@ -96,7 +96,7 @@ const Poke = ({ formatName }) => {
             Cancel
           </button>
         </div>
-        <div>
+        <div className="d-flex flex-wrap pokemon-grid">
           Poke detail
           {/* <div>
             <img
@@ -105,44 +105,65 @@ const Poke = ({ formatName }) => {
               }
             ></img>
           </div> */}
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Height (m)</th>
-                <th>Weight (kg)</th>
-                <th>Other</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{formatName(pokeState.name)}</td>
-                <td>{formatHeightOrWeight(pokeState.height)}</td>
-                <td>{formatHeightOrWeight(pokeState.weight)}</td>
-              </tr>
-              <tr>
-                {/* {displayComparison()} */}
-                <td>{formatName(secondPokeState.name)}</td>
-                <td>{formatHeightOrWeight(secondPokeState.height)}</td>
-                <td>{formatHeightOrWeight(secondPokeState.weight)}</td>
-              </tr>
-            </tbody>
-          </table>
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Stats</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                {/* <td>map through </td>
-            {pokeState.stats.map?.((ps) => {
-              return <p> (ps.base_stat)</p>;
-            })} */}
-              </tr>
-            </tbody>
-          </table>
+          <div className="card m-3" style={{ width: 400 }}>
+            <img
+              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokeId}.png`}
+              onError={(e) => {
+                e.target.onError = null;
+                e.target.src =
+                  "https://cdn.pixabay.com/photo/2016/09/01/09/31/pokemon-1635610_1280.png";
+              }}
+              className="card-image-top"
+              alt={pokeState.name} // to consider better alt text, image is uncessary
+            ></img>
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Height (m)</th>
+                  <th>Weight (kg)</th>
+                  {/* <th>Other</th> */}
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{formatName(pokeState.name)}</td>
+                  <td>{formatHeightOrWeight(pokeState.height)}</td>
+                  <td>{formatHeightOrWeight(pokeState.weight)}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div className="card m-3" style={{ width: 400 }}>
+            <img
+              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${secondPokeState}.png`}
+              onError={(e) => {
+                e.target.onError = null;
+                e.target.src =
+                  "https://cdn.pixabay.com/photo/2016/09/01/09/31/pokemon-1635610_1280.png";
+              }}
+              className="card-image-top"
+              alt={secondPokeState.name} // to consider better alt text, image is uncessary
+            ></img>
+
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Height (m)</th>
+                  <th>Weight (kg)</th>
+                  {/* <th>Other</th> */}
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{formatName(secondPokeState.name)}</td>
+                  <td>{formatHeightOrWeight(secondPokeState.height)}</td>
+                  <td>{formatHeightOrWeight(secondPokeState.weight)}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </>
     );
@@ -222,8 +243,6 @@ const Poke = ({ formatName }) => {
               </tbody>
             </table>
           </div>
-
-          <img src={pokeState.picFront}></img>
         </div>
       </div>
     </>
