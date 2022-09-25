@@ -62,7 +62,8 @@ function App() {
       const favouritedPokemon = [...favouritePokemon];
       const index = favouritedPokemon.findIndex((p) => p.url === poke.url);
       // splice
-      favouritedPokemon.splice(index, 1);
+      const removedPokemon = favouritedPokemon.splice(index, 1);
+      console.log(removedPokemon, "removed pokemon");
       // update state
       setFavouritePokemon(favouritedPokemon);
     }
@@ -91,6 +92,10 @@ function App() {
     // return "fa fa-heart";
   };
 
+  const formatName = (name) => {
+    return name ? name.charAt(0).toUpperCase() + name.slice(1) : name;
+  };
+
   return (
     <>
       <NavBar />
@@ -106,13 +111,17 @@ function App() {
       </div> */}
 
       <Routes>
-        <Route path="/pokemon/:pokeId" element={<Poke />} />
+        <Route
+          path="/pokemon/:pokeId"
+          element={<Poke formatName={(name) => formatName(name)} />}
+        />
         <Route
           path="/"
           element={
             <Pokemon
               onAddToFavourites={(poke) => handleAddToFavourites(poke)}
               onFavouriteClass={(poke) => onFavouriteClass(poke)}
+              formatName={(name) => formatName(name)}
             />
           }
         />
@@ -122,6 +131,7 @@ function App() {
             <Favourites
               favouritePokemon={favouritePokemon}
               onRemoveFromFavourites={handleRemoveFromFavourites}
+              formatName={(name) => formatName(name)}
             />
           }
         />

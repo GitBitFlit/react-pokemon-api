@@ -9,7 +9,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 const pokemonEndPoint = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=1154";
 
 // or (props) and then props.onAddToFavourites below
-const Pokemon = ({ onAddToFavourites, onFavouriteClass }) => {
+const Pokemon = ({ onAddToFavourites, onFavouriteClass, formatName }) => {
   const [pokemonState, setPokemonState] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedGeneration, setSelectedGeneration] = useState("All");
@@ -91,9 +91,6 @@ const Pokemon = ({ onAddToFavourites, onFavouriteClass }) => {
   // };
 
   // when do you call it handle... https://javascript.plainenglish.io/handy-naming-conventions-for-event-handler-functions-props-in-react-fc1cbb791364
-  const formatName = (name) => {
-    return name.charAt(0).toUpperCase() + name.slice(1);
-  };
 
   // const faveClass = (poke) => {
   //   // console.log("faveclass for pokemon");

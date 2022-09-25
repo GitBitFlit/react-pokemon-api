@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 const pokeEndPoint = "https://pokeapi.co/api/v2/pokemon";
 const pokemonEndPoint = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=1154";
 
-const Poke = () => {
+const Poke = ({ formatName }) => {
   // ERROR: name needs to match index.js Route path param name
   const { pokeId } = useParams();
   const [pokeState, setPokeState] = useState([]);
@@ -70,9 +70,10 @@ const Poke = () => {
   //     </div>;
   //   };
 
-  const formatName = (name) => {
-    return name.charAt(0).toUpperCase() + name.slice(1);
-  };
+  // const formatName = (name) => {
+  //   return name ? name.charAt(0).toUpperCase() + name.slice(1) : name;
+  //   // waits to render?
+  // };
 
   if (isComparisonState) {
     return (
