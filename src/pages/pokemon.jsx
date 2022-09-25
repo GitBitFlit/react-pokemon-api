@@ -192,7 +192,7 @@ const Pokemon = ({ onAddToFavourites, onFavouriteClass, formatName }) => {
         {/* map buttons from BED? and set selected state / display somewhere */}
       </div>
 
-      <div>
+      <div className="d-flex flex-wrap pokemon-grid">
         {filteredPokemon?.map((poke) => {
           return (
             <div key={poke.url}>
@@ -202,27 +202,13 @@ const Pokemon = ({ onAddToFavourites, onFavouriteClass, formatName }) => {
                   src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokeId(
                     poke.url
                   )}.png`}
-                  onerror="this.onerror-null;this.src='https://cdn.pixabay.com/photo/2016/09/01/09/31/pokemon-1635610_1280.png';"
-                  className="card-image-top"
-                  alt={poke.name} // to consider better alt text, image is uncessary
-                ></img>
-                <img
-                  src="https://cdn.pixabay.com/photo/2016/09/01/09/31/pokemon-1635610_12280.png"
-                  onerror="onerror=null;src='https://cdn.pixabay.com/photo/2016/09/01/09/31/pokemon-1635610_1280.png';"
-                />
-                <img
-                  src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokeId(
-                    poke.url
-                  )}.png`}
-                  onError={handleImageError()}
-                />
-                <img
-                  src="https://cdn.pixabay.com/photojhjhgj/2016/09/01/09/31/pokemon-1635610_12280.png"
                   onError={(e) => {
                     e.target.onError = null;
                     e.target.src =
                       "https://cdn.pixabay.com/photo/2016/09/01/09/31/pokemon-1635610_1280.png";
                   }}
+                  className="card-image-top"
+                  alt={poke.name} // to consider better alt text, image is uncessary
                 ></img>
                 <div>
                   <Link to={pokeSlug(poke.url)} className="btn btn-link m-3">

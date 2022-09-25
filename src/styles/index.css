@@ -15,3 +15,7 @@ code {
 .clickable {
   cursor: pointer;
 }
+
+.pokemon-grid {
+  /* flex: 1 0 34%; */
+}
