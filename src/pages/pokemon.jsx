@@ -115,6 +115,11 @@ const Pokemon = ({ onAddToFavourites, onFavouriteClass, formatName }) => {
   //   return name === "ivysaur" ? "fa fa-heart" : "fa fa-heart-o";
   // };
 
+  const handleImageError = () => {
+    console.log();
+    return `https://cdn.pixabay.com/photo/2016/09/01/09/31/pokemon-1635610_1280.png`;
+  };
+
   // when mapping use .?
   return (
     <>
@@ -190,15 +195,34 @@ const Pokemon = ({ onAddToFavourites, onFavouriteClass, formatName }) => {
       <div>
         {filteredPokemon?.map((poke) => {
           return (
-            <div>
+            <div key={poke.url}>
               {" "}
-              <div class="card m-3" style={{ width: 200 }}>
+              <div className="card m-3" style={{ width: 200 }}>
                 <img
                   src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokeId(
                     poke.url
                   )}.png`}
-                  class="card-image-top"
+                  onerror="this.onerror-null;this.src='https://cdn.pixabay.com/photo/2016/09/01/09/31/pokemon-1635610_1280.png';"
+                  className="card-image-top"
                   alt={poke.name} // to consider better alt text, image is uncessary
+                ></img>
+                <img
+                  src="https://cdn.pixabay.com/photo/2016/09/01/09/31/pokemon-1635610_12280.png"
+                  onerror="onerror=null;src='https://cdn.pixabay.com/photo/2016/09/01/09/31/pokemon-1635610_1280.png';"
+                />
+                <img
+                  src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokeId(
+                    poke.url
+                  )}.png`}
+                  onError={handleImageError()}
+                />
+                <img
+                  src="https://cdn.pixabay.com/photojhjhgj/2016/09/01/09/31/pokemon-1635610_12280.png"
+                  onError={(e) => {
+                    e.target.onError = null;
+                    e.target.src =
+                      "https://cdn.pixabay.com/photo/2016/09/01/09/31/pokemon-1635610_1280.png";
+                  }}
                 ></img>
                 <div>
                   <Link to={pokeSlug(poke.url)} className="btn btn-link m-3">
@@ -211,6 +235,7 @@ const Pokemon = ({ onAddToFavourites, onFavouriteClass, formatName }) => {
                     // className={faveClass}
                     className={onFavouriteClass(poke.name)}
                   ></i>
+                  <p>{pokeId(poke.url)}</p>
                 </div>
                 {/* <p>{poke.url}</p>
                 <p>{`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokeId(
