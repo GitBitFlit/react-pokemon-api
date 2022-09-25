@@ -62,6 +62,10 @@ const Poke = ({ formatName }) => {
     });
   };
 
+  const formatHeightOrWeight = (value) => {
+    return (value / 10).toFixed(1);
+  };
+
   //   const displayComparison = () => {
   //     <div>
   //       <td>{secondPokeState.name}</td>
@@ -88,26 +92,33 @@ const Poke = ({ formatName }) => {
         </div>
         <div>
           Poke detail
+          {/* <div>
+            <img
+              src={
+                // secondPokeState.sprites.other.official - artwork.front_default
+              }
+            ></img>
+          </div> */}
           <table className="table">
             <thead>
               <tr>
                 <th>Name</th>
-                <th>Height (unit)</th>
-                <th>Weight (unit)</th>
+                <th>Height (m)</th>
+                <th>Weight (kg)</th>
                 <th>Other</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td>{formatName(pokeState.name)}</td>
-                <td>{pokeState.height}</td>
-                <td>{pokeState.weight}</td>
+                <td>{formatHeightOrWeight(pokeState.height)}</td>
+                <td>{formatHeightOrWeight(pokeState.weight)}</td>
               </tr>
               <tr>
                 {/* {displayComparison()} */}
                 <td>{formatName(secondPokeState.name)}</td>
-                <td>{secondPokeState.height}</td>
-                <td>{secondPokeState.weight}</td>
+                <td>{formatHeightOrWeight(secondPokeState.height)}</td>
+                <td>{formatHeightOrWeight(secondPokeState.weight)}</td>
               </tr>
             </tbody>
           </table>
@@ -161,22 +172,37 @@ const Poke = ({ formatName }) => {
           Compare
         </button>
       </div>
+      {/* <div>
+        display{" "}
+        {Object.keys(pokeState).map((key, index) => {
+          return (
+            <div key={index}>
+              <h2>
+                {key}:{pokeState[key]}
+              </h2>
+            </div>
+          );
+        })}
+      </div> */}
       <div>
         Poke detail
+        <div>
+          <img src={pokeState.picFront}></img>
+        </div>
         <table className="table">
           <thead>
             <tr>
               <th>Name</th>
-              <th>Height (unit)</th>
-              <th>Weight (unit)</th>
+              <th>Height (m)</th>
+              <th>Weight (kg)</th>
               <th>Other</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>{formatName(pokeState.name)}</td>
-              <td>{pokeState.height}</td>
-              <td>{pokeState.weight}</td>
+              <td>{formatHeightOrWeight(pokeState.height)}</td>
+              <td>{formatHeightOrWeight(pokeState.weight)}</td>
             </tr>
           </tbody>
         </table>
