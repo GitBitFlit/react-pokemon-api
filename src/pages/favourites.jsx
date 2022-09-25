@@ -61,6 +61,7 @@ const Favourites = ({
                     onClick={() => {
                       onRemoveFromFavourites(poke);
                     }}
+                    className="btn btn-danger"
                   >
                     Remove
                   </button>

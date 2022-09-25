@@ -19,7 +19,7 @@ const Poke = ({ formatName }) => {
       // ERROR: .JSON()
       res.json().then((data) => {
         setPokeState(data);
-        // console.log(data, "data");
+        console.log(data, "poke data");
         fetch(pokemonEndPoint).then((res) => {
           res.json().then((data) => {
             // console.log(data, "pokemon state");
@@ -65,6 +65,12 @@ const Poke = ({ formatName }) => {
   const formatHeightOrWeight = (value) => {
     return (value / 10).toFixed(1);
   };
+
+  // const pokeId = (pokeUrl) => {
+  //   return pokeUrl.includes("pokemon-species")
+  //     ? pokeUrl.match(/(?<=pokemon-species\/)\d[^\/]*/)[0]
+  //     : pokeUrl.match(/(?<=pokemon\/)\d[^\/]*/)[0];
+  // };
 
   //   const displayComparison = () => {
   //     <div>
@@ -187,40 +193,38 @@ const Poke = ({ formatName }) => {
       <div>
         Poke detail
         <div>
+          <div className="card m-3" style={{ width: 400 }}>
+            <img
+              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokeId}.png`}
+              onError={(e) => {
+                e.target.onError = null;
+                e.target.src =
+                  "https://cdn.pixabay.com/photo/2016/09/01/09/31/pokemon-1635610_1280.png";
+              }}
+              className="card-image-top"
+              alt={pokeState.name} // to consider better alt text, image is uncessary
+            ></img>
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Height (m)</th>
+                  <th>Weight (kg)</th>
+                  {/* <th>Other</th> */}
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{formatName(pokeState.name)}</td>
+                  <td>{formatHeightOrWeight(pokeState.height)}</td>
+                  <td>{formatHeightOrWeight(pokeState.weight)}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
           <img src={pokeState.picFront}></img>
         </div>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Height (m)</th>
-              <th>Weight (kg)</th>
-              <th>Other</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{formatName(pokeState.name)}</td>
-              <td>{formatHeightOrWeight(pokeState.height)}</td>
-              <td>{formatHeightOrWeight(pokeState.weight)}</td>
-            </tr>
-          </tbody>
-        </table>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Stats</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              {/* <td>map through </td>
-            {PokeState.stats.map?.((ps) => {
-              return <p> (ps.base_stat)</p>;
-            })} */}
-            </tr>
-          </tbody>
-        </table>
       </div>
     </>
   );

@@ -100,6 +100,22 @@ const Pokemon = ({ onAddToFavourites, onFavouriteClass, formatName }) => {
       : pokeUrl.match(/(?<=pokemon\/)\d[^\/]*/)[0];
   };
 
+  // const displayGenerationButtons = () => {
+  //   return (
+  //     for (let i = 1; i < 9; i++) {
+  //     <div>
+  //       <p>{displayGenerationStatement()}</p>
+  //       <button
+  //         onClick={() => handleGenerationSelected(i)}
+  //         className="btn btn-info m-2"
+  //       >
+  //         Generation {i}
+  //       </button>
+  //     </div>;
+  //   })
+
+  // };
+
   // const handleFavourite = (poke) => {
   //   // pass up to app.js
   // };
@@ -129,7 +145,7 @@ const Pokemon = ({ onAddToFavourites, onFavouriteClass, formatName }) => {
           name="search-pokemon"
           id="search-pokemon"
           placeholder="Search Pokemon..."
-          className="search-input"
+          className="search-input m-3"
           value={searchQuery}
           onChange={(event) => {
             setSearchQuery(event.currentTarget.value);
@@ -139,6 +155,10 @@ const Pokemon = ({ onAddToFavourites, onFavouriteClass, formatName }) => {
         {/* add a clear / cross button */}
       </div>
 
+      {/* <div>
+        display buttons here
+        {displayGenerationButtons()}
+      </div> */}
       <div>
         <p>{displayGenerationStatement()}</p>
         <button
@@ -221,7 +241,7 @@ const Pokemon = ({ onAddToFavourites, onFavouriteClass, formatName }) => {
                     // className={faveClass}
                     className={onFavouriteClass(poke.name)}
                   ></i>
-                  <p>{pokeId(poke.url)}</p>
+                  {/* <p>{pokeId(poke.url)}</p> */}
                 </div>
                 {/* <p>{poke.url}</p>
                 <p>{`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokeId(
