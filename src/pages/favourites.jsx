@@ -5,6 +5,11 @@ const Favourites = ({ favouritePokemon, onRemoveFromFavourites }) => {
   //   localStorage.getItem("favouritePokemon", JSON.stringify(favouritePokemon));
   // }, [favouritePokemon]);
 
+  const formatName = (name) => {
+    return name.charAt(0).toUpperCase() + name.slice(1);
+  };
+
+
   return (
     <>
       <div>Favourites</div>
@@ -22,7 +27,7 @@ const Favourites = ({ favouritePokemon, onRemoveFromFavourites }) => {
           {favouritePokemon.map((poke) => {
             return (
               <tr key={poke.url}>
-                <td>{poke.name}</td>
+                <td>{formatName(poke.name)}</td>
                 <td>
                   <button
                     onClick={() => {

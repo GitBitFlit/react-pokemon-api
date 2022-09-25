@@ -9,7 +9,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 const pokemonEndPoint = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=1154";
 
 // or (props) and then props.onAddToFavourites below
-const Pokemon = ({ onAddToFavourites }) => { 
+const Pokemon = ({ onAddToFavourites, onFavouriteClass }) => {
   const [pokemonState, setPokemonState] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedGeneration, setSelectedGeneration] = useState("All");
@@ -187,13 +187,19 @@ const Pokemon = ({ onAddToFavourites }) => {
                   {/* <td>{poke.url}</td> */}
                   {/* <td>Map generation here?</td> */}
                   <td>{/* <i className="fa-solid fa-heart"></i> */}</td>
-                  <td>
+                  {/* <td>
                     <button
                       onClick={() => onAddToFavourites(poke)}
                       className="btn btn-danger m-3"
                     >
                       Favourite
                     </button>
+                  </td> */}
+                  <td>
+                    <i
+                      onClick={() => onAddToFavourites(poke)}
+                      className={onFavouriteClass}
+                    ></i>
                   </td>
                   <td>
                     {/* <button onClick={() => handlePokeSelected(p.url)}>

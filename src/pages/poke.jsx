@@ -8,7 +8,7 @@ const Poke = () => {
   // ERROR: name needs to match index.js Route path param name
   const { pokeId } = useParams();
   const [pokeState, setPokeState] = useState([]);
-  const [secondPokeId, setSecondPokeId] = useState("");
+  // const [secondPokeId, setSecondPokeId] = useState("");
   const [secondPokeState, setSecondPokeState] = useState([]);
   const [pokemonState, setPokemonState] = useState([]);
   const [isComparisonState, setIsComparisonState] = useState(false);
@@ -70,6 +70,10 @@ const Poke = () => {
   //     </div>;
   //   };
 
+  const formatName = (name) => {
+    return name.charAt(0).toUpperCase() + name.slice(1);
+  };
+
   if (isComparisonState) {
     return (
       <>
@@ -94,13 +98,13 @@ const Poke = () => {
             </thead>
             <tbody>
               <tr>
-                <td>{pokeState.name}</td>
+                <td>{formatName(pokeState.name)}</td>
                 <td>{pokeState.height}</td>
                 <td>{pokeState.weight}</td>
               </tr>
               <tr>
                 {/* {displayComparison()} */}
-                <td>{secondPokeState.name}</td>
+                <td>{formatName(secondPokeState.name)}</td>
                 <td>{secondPokeState.height}</td>
                 <td>{secondPokeState.weight}</td>
               </tr>
@@ -133,17 +137,17 @@ const Poke = () => {
         <select onChange={handleSecondPokemonSelected}>
           {" "}
           <option>Pokemon</option>
-          {pokemonState?.map((p) => {
+          {pokemonState?.map((poke) => {
             return (
               <option
-                key={p.url}
+                key={poke.url}
                 value={
-                  p.url.includes("pokemon-species")
-                    ? p.url.match(/(?<=pokemon-species\/)\d[^\/]*/)[0]
-                    : p.url.match(/(?<=pokemon\/)\d[^\/]*/)[0]
+                  poke.url.includes("pokemon-species")
+                    ? poke.url.match(/(?<=pokemon-species\/)\d[^\/]*/)[0]
+                    : poke.url.match(/(?<=pokemon\/)\d[^\/]*/)[0]
                 }
               >
-                {p.name}
+                {formatName(poke.name)}
               </option>
             );
           })}
@@ -169,7 +173,7 @@ const Poke = () => {
           </thead>
           <tbody>
             <tr>
-              <td>{pokeState.name}</td>
+              <td>{formatName(pokeState.name)}</td>
               <td>{pokeState.height}</td>
               <td>{pokeState.weight}</td>
             </tr>
