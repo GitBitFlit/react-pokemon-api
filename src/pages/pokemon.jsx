@@ -86,6 +86,20 @@ const Pokemon = ({ onAddToFavourites, onFavouriteClass, formatName }) => {
     });
   };
 
+  const pokeSlug = (pokeUrl) => {
+    return `/pokemon/${
+      pokeUrl.includes("pokemon-species")
+        ? pokeUrl.match(/(?<=pokemon-species\/)\d[^]*/)[0]
+        : pokeUrl.match(/(?<=pokemon\/)\d[^]*/)[0]
+    }`;
+  };
+
+  const pokeId = (pokeUrl) => {
+    return pokeUrl.includes("pokemon-species")
+      ? pokeUrl.match(/(?<=pokemon-species\/)\d[\/]*/)[0]
+      : pokeUrl.match(/(?<=pokemon\/)\d[^\/]*/)[0];
+  };
+
   // const handleFavourite = (poke) => {
   //   // pass up to app.js
   // };
@@ -210,17 +224,18 @@ const Pokemon = ({ onAddToFavourites, onFavouriteClass, formatName }) => {
                     ></i>
                   </td>
                   <td>
+                    <img
+                      src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokeId(
+                        poke.url
+                      )}.png`}
+                    ></img>
+                  </td>
+                  <td>{pokeSlug(poke.url)}</td>
+                  <td>
                     {/* <button onClick={() => handlePokeSelected(p.url)}>
                       View
                     </button> */}
-                    <Link
-                      to={`/pokemon/${
-                        poke.url.includes("pokemon-species")
-                          ? poke.url.match(/(?<=pokemon-species\/)\d[^]*/)[0]
-                          : poke.url.match(/(?<=pokemon\/)\d[^]*/)[0]
-                      }`}
-                      className="btn btn-info m-3"
-                    >
+                    <Link to={pokeSlug(poke.url)} className="btn btn-info m-3">
                       View
                     </Link>
                   </td>
