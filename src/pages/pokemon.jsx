@@ -96,7 +96,7 @@ const Pokemon = ({ onAddToFavourites, onFavouriteClass, formatName }) => {
 
   const pokeId = (pokeUrl) => {
     return pokeUrl.includes("pokemon-species")
-      ? pokeUrl.match(/(?<=pokemon-species\/)\d[\/]*/)[0]
+      ? pokeUrl.match(/(?<=pokemon-species\/)\d[^\/]*/)[0]
       : pokeUrl.match(/(?<=pokemon\/)\d[^\/]*/)[0];
   };
 
@@ -193,30 +193,29 @@ const Pokemon = ({ onAddToFavourites, onFavouriteClass, formatName }) => {
             <div>
               {" "}
               <div class="card m-3" style={{ width: 200 }}>
-                <i
-                  onClick={() => onAddToFavourites(poke)}
-                  // className={onFavouriteClass}
-                  // className={faveClass}
-                  className={onFavouriteClass(poke.name)}
-                ></i>
+                <img
+                  src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokeId(
+                    poke.url
+                  )}.png`}
+                  class="card-image-top"
+                  alt={poke.name} // to consider better alt text, image is uncessary
+                ></img>
+                <div>
+                  <Link to={pokeSlug(poke.url)} className="btn btn-link m-3">
+                    {formatName(poke.name)}
+                  </Link>
 
-                <div class="card m-3">
-                  <img
-                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokeId(
-                      poke.url
-                    )}.png`}
-                    class="card-image-top"
-                    alt={poke.name} // to consider better alt text, image is uncessary
-                  ></img>
-                  <div>
-                    <Link
-                      to={pokeSlug(poke.url)}
-                      className="btn btn-link m-3 stretched-link"
-                    >
-                      {formatName(poke.name)}
-                    </Link>
-                  </div>
+                  <i
+                    onClick={() => onAddToFavourites(poke)}
+                    // className={onFavouriteClass}
+                    // className={faveClass}
+                    className={onFavouriteClass(poke.name)}
+                  ></i>
                 </div>
+                <p>{poke.url}</p>
+                <p>{`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokeId(
+                  poke.url
+                )}.png`}</p>
               </div>
             </div>
           );
