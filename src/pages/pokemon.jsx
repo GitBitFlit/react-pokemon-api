@@ -188,62 +188,39 @@ const Pokemon = ({ onAddToFavourites, onFavouriteClass, formatName }) => {
       </div>
 
       <div>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Pokemon</th>
-              {/* <th>URL</th> */}
-              {/* <th>Generation</th> */}
-              <th></th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredPokemon?.map((poke) => {
-              return (
-                <tr key={poke.url}>
-                  <td>{formatName(poke.name)}</td>
-                  {/* <td>{poke.url}</td> */}
-                  {/* <td>Map generation here?</td> */}
-                  <td>{/* <i className="fa-solid fa-heart"></i> */}</td>
-                  {/* <td>
-                    <button
-                      onClick={() => onAddToFavourites(poke)}
-                      className="btn btn-danger m-3"
+        {filteredPokemon?.map((poke) => {
+          return (
+            <div>
+              {" "}
+              <div class="card m-3" style={{ width: 200 }}>
+                <i
+                  onClick={() => onAddToFavourites(poke)}
+                  // className={onFavouriteClass}
+                  // className={faveClass}
+                  className={onFavouriteClass(poke.name)}
+                ></i>
+
+                <div class="card m-3">
+                  <img
+                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokeId(
+                      poke.url
+                    )}.png`}
+                    class="card-image-top"
+                    alt={poke.name} // to consider better alt text, image is uncessary
+                  ></img>
+                  <div>
+                    <Link
+                      to={pokeSlug(poke.url)}
+                      className="btn btn-link m-3 stretched-link"
                     >
-                      Favourite
-                    </button>
-                  </td> */}
-                  <td>
-                    <i
-                      onClick={() => onAddToFavourites(poke)}
-                      // className={onFavouriteClass}
-                      // className={faveClass}
-                      className={onFavouriteClass(poke.name)}
-                    ></i>
-                  </td>
-                  <td>
-                    <img
-                      src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokeId(
-                        poke.url
-                      )}.png`}
-                    ></img>
-                  </td>
-                  <td>{pokeSlug(poke.url)}</td>
-                  <td>
-                    {/* <button onClick={() => handlePokeSelected(p.url)}>
-                      View
-                    </button> */}
-                    <Link to={pokeSlug(poke.url)} className="btn btn-info m-3">
-                      View
+                      {formatName(poke.name)}
                     </Link>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </>
   );
