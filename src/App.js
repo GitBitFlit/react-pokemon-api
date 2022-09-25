@@ -57,6 +57,16 @@ function App() {
       // setFavouritePokemon(...favouritePokemon, poke);
     }
 
+    if (findPoke) {
+      // remove from list
+      const favouritedPokemon = [...favouritePokemon];
+      const index = favouritedPokemon.findIndex((p) => p.url === poke.url);
+      // splice
+      favouritedPokemon.splice(index, 1);
+      // update state
+      setFavouritePokemon(favouritedPokemon);
+    }
+
     // console.log(findPoke, "poke found?");
     // console.log(poke, "poke to add to favourites");
   };
@@ -77,7 +87,7 @@ function App() {
   const onFavouriteClass = (name) => {
     const findPoke = favouritePokemon.find((p) => p.name === name);
     // if (!findPoke) {
-    return findPoke ? "fa fa-heart" : "fa fa-heart-o";
+    return findPoke ? "clickable fa fa-heart" : "clickable fa fa-heart-o";
     // return "fa fa-heart";
   };
 
