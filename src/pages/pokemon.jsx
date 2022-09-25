@@ -212,10 +212,10 @@ const Pokemon = ({ onAddToFavourites, onFavouriteClass, formatName }) => {
                     className={onFavouriteClass(poke.name)}
                   ></i>
                 </div>
-                <p>{poke.url}</p>
+                {/* <p>{poke.url}</p>
                 <p>{`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokeId(
                   poke.url
-                )}.png`}</p>
+                )}.png`}</p> */}
               </div>
             </div>
           );
