@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const Favourites = ({ favouritePokemon, onRemoveFromFavourites }) => {
   // useEffect(() => {
@@ -9,12 +10,24 @@ const Favourites = ({ favouritePokemon, onRemoveFromFavourites }) => {
     return name.charAt(0).toUpperCase() + name.slice(1);
   };
 
+  if (favouritePokemon.length === 0) {
+    return (
+      <div>
+        <h1>Favourites</h1>
+        <br />
+        Oh dear! <br /> You haven't selected any favourite pokemon. <br />
+        Quick... <Link to="/">look here</Link> to select your favourites!
+      </div>
+    );
+  }
 
   return (
     <>
-      <div>Favourites</div>
       <div>
-        enable click to view detail, remove button, show date added? <p />
+        <h1>Favourites</h1>
+      </div>
+      <div>
+        <p />
         <br />
       </div>
       <table>
