@@ -1,42 +1,22 @@
-// import React from "react"
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-// import { FontAwesomeIcon } from "font-awesome";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-// const pokemonEndPoint = "https://pokeapi.co/api/v2/pokemon/";
 // can update limit as required [1154]
 const pokemonEndPoint = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=1154";
 
-const Pokemon = () => {
+const Pokemon = ({ onAddToFavourites, onFavouriteClass, formatName }) => {
   const [pokemonState, setPokemonState] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedGeneration, setSelectedGeneration] = useState("All");
-  // should you always use state terminology https://reactjs.org/docs/hooks-rules.html#explanation
-  const [favouriteState, setFavouriteState] = useState([]);
-  // const [filterGeneration, setFilterGeneration] = useState("All");
 
   useEffect(() => {
     fetch(pokemonEndPoint).then((res) => {
       res.json().then((data) => {
         setPokemonState(data.results);
-        // console.log(data.results, "poke");
-        // console.log(data.results[0], "0");
       });
     });
   }, []);
-
-  // const handlePokeSelected = (pokeURL) => {
-  //   // console.log(pokeURL);
-  //   console.log(pokeURL, "PokeURL");
-  //   console.log(
-  //     pokeURL.includes("pokemon-species"),
-  //     "pokemon-species included"
-  //   );
-  //   const id = pokeURL.match(/(?<=pokemon\/)\d[^\/]*/)[0]; // regex returns an array
-  //   console.log("id", id, "id here");
-  //   // to={`/pokemon/${p.url.match(/(?<=pokemon\/)\d[^\/]*/)[0]}`}
-  // };
 
   let filteredPokemon = pokemonState;
   if (searchQuery) {
@@ -44,9 +24,6 @@ const Pokemon = () => {
       pokemon.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
   }
-
-  // filter by generation w/ number as id
-  // https://pokeapi.co/api/v2/generation/2
 
   const displayGenerationStatement = () => {
     if (selectedGeneration === "All") {
@@ -57,42 +34,38 @@ const Pokemon = () => {
   };
 
   const handleGenerationSelected = (g) => {
-    // console.log(generation, "g here");
-    console.log(selectedGeneration, "g here");
     if (selectedGeneration === g) {
-      // want to de-select and unformat selected button
       fetch(pokemonEndPoint).then((res) => {
         res.json().then((data) => {
           setPokemonState(data.results);
           setSelectedGeneration("All");
         });
       });
-      console.log("do nothing");
       return;
     }
     const generation = Number(g);
-    console.log(generation, "generation");
     fetch(`https://pokeapi.co/api/v2/generation/${generation}`).then((res) => {
       res.json().then((data) => {
-        console.log(data.id, "data.id");
-        console.log(data.names, "data.names");
-        console.log(data.pokemon_species, "data.pokemon_species");
         setPokemonState(data.pokemon_species);
-        // filteredPokemon = data.pokemon_species;
-        console.log(filteredPokemon, "filtered pokemon after g selection");
         setSelectedGeneration(g);
       });
     });
   };
 
-  const handleFavourite = (poke) => {};
-
-  // when do you call it handle... https://javascript.plainenglish.io/handy-naming-conventions-for-event-handler-functions-props-in-react-fc1cbb791364
-  const formatName = (name) => {
-    return name.charAt(0).toUpperCase() + name.slice(1);
+  const pokeSlug = (pokeUrl) => {
+    return `/pokemon/${
+      pokeUrl.includes("pokemon-species")
+        ? pokeUrl.match(/(?<=pokemon-species\/)\d[^]*/)[0]
+        : pokeUrl.match(/(?<=pokemon\/)\d[^]*/)[0]
+    }`;
   };
 
-  // when mapping use .?
+  const pokeId = (pokeUrl) => {
+    return pokeUrl.includes("pokemon-species")
+      ? pokeUrl.match(/(?<=pokemon-species\/)\d[^\/]*/)[0]
+      : pokeUrl.match(/(?<=pokemon\/)\d[^\/]*/)[0];
+  };
+
   return (
     <>
       <div>
@@ -101,14 +74,12 @@ const Pokemon = () => {
           name="search-pokemon"
           id="search-pokemon"
           placeholder="Search Pokemon..."
-          className="search-input"
+          className="search-input m-3"
           value={searchQuery}
           onChange={(event) => {
             setSearchQuery(event.currentTarget.value);
           }}
         ></input>
-        {/* <FontAwesomeIcon icon="fa-solid fa-magnifying-glass" /> */}
-        {/* add a clear / cross button */}
       </div>
 
       <div>
@@ -161,59 +132,40 @@ const Pokemon = () => {
         >
           Generation 8
         </button>
-        {/* map buttons from BED? and set selected state / display somewhere */}
       </div>
 
-      <div>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Pokemon</th>
-              <th>URL</th>
-              {/* <th>Generation</th> */}
-              <th></th>
-              <th></th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredPokemon?.map((poke) => {
-              return (
-                <tr key={poke.url}>
-                  <td>{formatName(poke.name)}</td>
-                  <td>{poke.url}</td>
-                  {/* <td>Map generation here?</td> */}
-                  <td>{/* <i className="fa-solid fa-heart"></i> */}</td>
-                  <td>
-                    <button
-                      onClick={() => {
-                        handleFavourite(poke.url);
-                      }}
-                      className="btn btn-danger m-3"
-                    >
-                      Favourite
-                    </button>
-                  </td>
-                  <td>
-                    {/* <button onClick={() => handlePokeSelected(p.url)}>
-                      View
-                    </button> */}
-                    <Link
-                      to={`/pokemon/${
-                        poke.url.includes("pokemon-species")
-                          ? poke.url.match(/(?<=pokemon-species\/)\d[^\/]*/)[0]
-                          : poke.url.match(/(?<=pokemon\/)\d[^\/]*/)[0]
-                      }`}
-                      className="btn btn-info m-3"
-                    >
-                      View
-                    </Link>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+      <div className="d-flex flex-wrap pokemon-grid">
+        {filteredPokemon?.map((poke) => {
+          return (
+            <div key={poke.url}>
+              {" "}
+              <div className="card m-3" style={{ width: 200 }}>
+                <img
+                  src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokeId(
+                    poke.url
+                  )}.png`}
+                  onError={(e) => {
+                    e.target.onError = null;
+                    e.target.src =
+                      "https://cdn.pixabay.com/photo/2016/09/01/09/31/pokemon-1635610_1280.png";
+                  }}
+                  className="card-image-top"
+                  alt={poke.name} // to consider better alt text, stating 'image' is uncessary
+                ></img>
+                <div>
+                  <Link to={pokeSlug(poke.url)} className="btn btn-link m-3">
+                    {formatName(poke.name)}
+                  </Link>
+
+                  <i
+                    onClick={() => onAddToFavourites(poke)}
+                    className={onFavouriteClass(poke.name)}
+                  ></i>
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </>
   );

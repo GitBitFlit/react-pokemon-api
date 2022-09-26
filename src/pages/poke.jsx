@@ -4,26 +4,19 @@ import { useEffect, useState } from "react";
 const pokeEndPoint = "https://pokeapi.co/api/v2/pokemon";
 const pokemonEndPoint = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=1154";
 
-const Poke = () => {
-  // ERROR: name needs to match index.js Route path param name
+const Poke = ({ formatName }) => {
   const { pokeId } = useParams();
   const [pokeState, setPokeState] = useState([]);
-  const [secondPokeId, setSecondPokeId] = useState("");
   const [secondPokeState, setSecondPokeState] = useState([]);
   const [pokemonState, setPokemonState] = useState([]);
   const [isComparisonState, setIsComparisonState] = useState(false);
 
   useEffect(() => {
-    console.log(`${pokeEndPoint}/${pokeId}`, "pokemon endpoint /id");
     fetch(`${pokeEndPoint}/${pokeId}`).then((res) => {
-      // ERROR: .JSON()
       res.json().then((data) => {
         setPokeState(data);
-        // console.log(data, "data");
         fetch(pokemonEndPoint).then((res) => {
           res.json().then((data) => {
-            // console.log(data, "pokemon state");
-
             setPokemonState(data.results);
           });
         });
@@ -32,10 +25,6 @@ const Poke = () => {
   }, [pokeId]);
 
   const handleComparePokemon = () => {
-    // isComparisonState
-    //   ? setIsComparisonState(false)
-    //   : setIsComparisonState(true);
-
     setIsComparisonState(true);
   };
 
@@ -45,30 +34,17 @@ const Poke = () => {
   };
 
   const handleSecondPokemonSelected = (event) => {
-    const secondPokeId = Number(event.currentTarget.value); // conver to numnber??
-    console.log(typeof secondPokeId, "second poke id"); // ??? has it loaded
-    console.log(event.currentTarget.value);
-
-    console.log(`${pokeEndPoint}/${secondPokeId}`, "2nd pokemon url");
+    const secondPokeId = Number(event.currentTarget.value);
     fetch(`${pokeEndPoint}/${secondPokeId}`).then((res) => {
-      // ERROR: .JSON()
       res.json().then((data) => {
-        console.log(data, "data");
         setSecondPokeState(data);
-        console.log(secondPokeState, "second poke state");
-        // displayComparison();
-        // console.log(data, "data");
       });
     });
   };
 
-  //   const displayComparison = () => {
-  //     <div>
-  //       <td>{secondPokeState.name}</td>
-  //       <td>{secondPokeState.height}</td>
-  //       <td>{secondPokeState.weight}</td>
-  //     </div>;
-  //   };
+  const formatHeightOrWeight = (value) => {
+    return (value / 10).toFixed(1);
+  };
 
   if (isComparisonState) {
     return (
@@ -81,46 +57,65 @@ const Poke = () => {
             Cancel
           </button>
         </div>
-        <div>
+        <div className="d-flex flex-wrap pokemon-grid">
           Poke detail
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Height (unit)</th>
-                <th>Weight (unit)</th>
-                <th>Other</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>{pokeState.name}</td>
-                <td>{pokeState.height}</td>
-                <td>{pokeState.weight}</td>
-              </tr>
-              <tr>
-                {/* {displayComparison()} */}
-                <td>{secondPokeState.name}</td>
-                <td>{secondPokeState.height}</td>
-                <td>{secondPokeState.weight}</td>
-              </tr>
-            </tbody>
-          </table>
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Stats</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                {/* <td>map through </td>
-            {pokeState.stats.map?.((ps) => {
-              return <p> (ps.base_stat)</p>;
-            })} */}
-              </tr>
-            </tbody>
-          </table>
+          <div className="card m-3" style={{ width: 400 }}>
+            <img
+              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokeId}.png`}
+              onError={(e) => {
+                e.target.onError = null;
+                e.target.src =
+                  "https://cdn.pixabay.com/photo/2016/09/01/09/31/pokemon-1635610_1280.png";
+              }}
+              className="card-image-top"
+              alt={pokeState.name} // to consider better alt text, image is uncessary
+            ></img>
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Height (m)</th>
+                  <th>Weight (kg)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{formatName(pokeState.name)}</td>
+                  <td>{formatHeightOrWeight(pokeState.height)}</td>
+                  <td>{formatHeightOrWeight(pokeState.weight)}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div className="card m-3" style={{ width: 400 }}>
+            <img
+              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${secondPokeState}.png`}
+              onError={(e) => {
+                e.target.onError = null;
+                e.target.src =
+                  "https://cdn.pixabay.com/photo/2016/09/01/09/31/pokemon-1635610_1280.png";
+              }}
+              className="card-image-top"
+              alt={secondPokeState.name} // to consider better alt text, stating 'image' is uncessary
+            ></img>
+
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Height (m)</th>
+                  <th>Weight (kg)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{formatName(secondPokeState.name)}</td>
+                  <td>{formatHeightOrWeight(secondPokeState.height)}</td>
+                  <td>{formatHeightOrWeight(secondPokeState.weight)}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </>
     );
@@ -133,17 +128,17 @@ const Poke = () => {
         <select onChange={handleSecondPokemonSelected}>
           {" "}
           <option>Pokemon</option>
-          {pokemonState?.map((p) => {
+          {pokemonState?.map((poke) => {
             return (
               <option
-                key={p.url}
+                key={poke.url}
                 value={
-                  p.url.includes("pokemon-species")
-                    ? p.url.match(/(?<=pokemon-species\/)\d[^\/]*/)[0]
-                    : p.url.match(/(?<=pokemon\/)\d[^\/]*/)[0]
+                  poke.url.includes("pokemon-species")
+                    ? poke.url.match(/(?<=pokemon-species\/)\d[^\/]*/)[0]
+                    : poke.url.match(/(?<=pokemon\/)\d[^\/]*/)[0]
                 }
               >
-                {p.name}
+                {formatName(poke.name)}
               </option>
             );
           })}
@@ -158,38 +153,37 @@ const Poke = () => {
       </div>
       <div>
         Poke detail
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Height (unit)</th>
-              <th>Weight (unit)</th>
-              <th>Other</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>{pokeState.name}</td>
-              <td>{pokeState.height}</td>
-              <td>{pokeState.weight}</td>
-            </tr>
-          </tbody>
-        </table>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Stats</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              {/* <td>map through </td>
-            {PokeState.stats.map?.((ps) => {
-              return <p> (ps.base_stat)</p>;
-            })} */}
-            </tr>
-          </tbody>
-        </table>
+        <div>
+          <div className="card m-3" style={{ width: 400 }}>
+            <img
+              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokeId}.png`}
+              onError={(e) => {
+                e.target.onError = null;
+                e.target.src =
+                  "https://cdn.pixabay.com/photo/2016/09/01/09/31/pokemon-1635610_1280.png";
+              }}
+              className="card-image-top"
+              alt={pokeState.name} // to consider better alt text, stating 'image' is uncessary
+            ></img>
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Height (m)</th>
+                  <th>Weight (kg)</th>
+                  {/* <th>Other</th> */}
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{formatName(pokeState.name)}</td>
+                  <td>{formatHeightOrWeight(pokeState.height)}</td>
+                  <td>{formatHeightOrWeight(pokeState.weight)}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </>
   );
