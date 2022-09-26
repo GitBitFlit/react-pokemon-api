@@ -34,10 +34,17 @@ const Poke = ({ formatName }) => {
   };
 
   const handleSecondPokemonSelected = (event) => {
+    // console.log(secondPokeState, "2 poke selection");
     const secondPokeId = Number(event.currentTarget.value);
+    if (!secondPokeId) {
+      setSecondPokeState([]);
+      return;
+    }
+    // console.log(secondPokeId, "second poke ID");
     fetch(`${pokeEndPoint}/${secondPokeId}`).then((res) => {
       res.json().then((data) => {
         setSecondPokeState(data);
+        console.log(secondPokeState, "2 poke selected");
       });
     });
   };
@@ -125,7 +132,7 @@ const Poke = ({ formatName }) => {
     <>
       <div>
         Select a Pokemon to Compare
-        <select onChange={handleSecondPokemonSelected}>
+        <select className="m-3" onChange={handleSecondPokemonSelected}>
           {" "}
           <option>Pokemon</option>
           {pokemonState?.map((poke) => {
@@ -147,7 +154,11 @@ const Poke = ({ formatName }) => {
       </div>
 
       <div>
-        <button className="btn btn-info m-3" onClick={handleComparePokemon}>
+        <button
+          className="btn btn-info m-3"
+          onClick={handleComparePokemon}
+          disabled={secondPokeState.length < 1}
+        >
           Compare
         </button>
       </div>
