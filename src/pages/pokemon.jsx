@@ -150,7 +150,7 @@ const Pokemon = ({ onAddToFavourites, onFavouriteClass, formatName }) => {
                       "https://cdn.pixabay.com/photo/2016/09/01/09/31/pokemon-1635610_1280.png";
                   }}
                   className="card-image-top"
-                  alt={poke.name} // to consider better alt text, stating 'image' is uncessary
+                  alt={poke.name} // to consider better alt text, stating 'image' is unnecessary
                 ></img>
                 <div>
                   <Link to={pokeSlug(poke.url)} className="btn btn-link m-3">
