@@ -1,43 +1,22 @@
-// import React from "react"
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-// import { FontAwesomeIcon } from "font-awesome";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-// const pokemonEndPoint = "https://pokeapi.co/api/v2/pokemon/";
 // can update limit as required [1154]
 const pokemonEndPoint = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=1154";
 
-// or (props) and then props.onAddToFavourites below
 const Pokemon = ({ onAddToFavourites, onFavouriteClass, formatName }) => {
   const [pokemonState, setPokemonState] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedGeneration, setSelectedGeneration] = useState("All");
-  // should you always use state terminology https://reactjs.org/docs/hooks-rules.html#explanation
-  // const [favouriteState, setFavouriteState] = useState([]);
-  // const [filterGeneration, setFilterGeneration] = useState("All");
 
   useEffect(() => {
     fetch(pokemonEndPoint).then((res) => {
       res.json().then((data) => {
         setPokemonState(data.results);
-        // console.log(data.results, "poke");
-        // console.log(data.results[0], "0");
       });
     });
   }, []);
-
-  // const handlePokeSelected = (pokeURL) => {
-  //   // console.log(pokeURL);
-  //   console.log(pokeURL, "PokeURL");
-  //   console.log(
-  //     pokeURL.includes("pokemon-species"),
-  //     "pokemon-species included"
-  //   );
-  //   const id = pokeURL.match(/(?<=pokemon\/)\d[^\/]*/)[0]; // regex returns an array
-  //   console.log("id", id, "id here");
-  //   // to={`/pokemon/${p.url.match(/(?<=pokemon\/)\d[^\/]*/)[0]}`}
-  // };
 
   let filteredPokemon = pokemonState;
   if (searchQuery) {
@@ -45,9 +24,6 @@ const Pokemon = ({ onAddToFavourites, onFavouriteClass, formatName }) => {
       pokemon.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
   }
-
-  // filter by generation w/ number as id
-  // https://pokeapi.co/api/v2/generation/2
 
   const displayGenerationStatement = () => {
     if (selectedGeneration === "All") {
@@ -58,29 +34,19 @@ const Pokemon = ({ onAddToFavourites, onFavouriteClass, formatName }) => {
   };
 
   const handleGenerationSelected = (g) => {
-    // console.log(generation, "g here");
-    console.log(selectedGeneration, "g here");
     if (selectedGeneration === g) {
-      // want to de-select and unformat selected button
       fetch(pokemonEndPoint).then((res) => {
         res.json().then((data) => {
           setPokemonState(data.results);
           setSelectedGeneration("All");
         });
       });
-      console.log("do nothing");
       return;
     }
     const generation = Number(g);
-    console.log(generation, "generation");
     fetch(`https://pokeapi.co/api/v2/generation/${generation}`).then((res) => {
       res.json().then((data) => {
-        console.log(data.id, "data.id");
-        console.log(data.names, "data.names");
-        console.log(data.pokemon_species, "data.pokemon_species");
         setPokemonState(data.pokemon_species);
-        // filteredPokemon = data.pokemon_species;
-        console.log(filteredPokemon, "filtered pokemon after g selection");
         setSelectedGeneration(g);
       });
     });
@@ -100,43 +66,6 @@ const Pokemon = ({ onAddToFavourites, onFavouriteClass, formatName }) => {
       : pokeUrl.match(/(?<=pokemon\/)\d[^\/]*/)[0];
   };
 
-  // const displayGenerationButtons = () => {
-  //   return (
-  //     for (let i = 1; i < 9; i++) {
-  //     <div>
-  //       <p>{displayGenerationStatement()}</p>
-  //       <button
-  //         onClick={() => handleGenerationSelected(i)}
-  //         className="btn btn-info m-2"
-  //       >
-  //         Generation {i}
-  //       </button>
-  //     </div>;
-  //   })
-
-  // };
-
-  // const handleFavourite = (poke) => {
-  //   // pass up to app.js
-  // };
-
-  // when do you call it handle... https://javascript.plainenglish.io/handy-naming-conventions-for-event-handler-functions-props-in-react-fc1cbb791364
-
-  // const faveClass = (poke) => {
-  //   // console.log("faveclass for pokemon");
-  //   return "fa fa-heart";
-  // };
-
-  // const faveClass = (name) => {
-  //   return name === "ivysaur" ? "fa fa-heart" : "fa fa-heart-o";
-  // };
-
-  const handleImageError = () => {
-    console.log();
-    return `https://cdn.pixabay.com/photo/2016/09/01/09/31/pokemon-1635610_1280.png`;
-  };
-
-  // when mapping use .?
   return (
     <>
       <div>
@@ -151,14 +80,8 @@ const Pokemon = ({ onAddToFavourites, onFavouriteClass, formatName }) => {
             setSearchQuery(event.currentTarget.value);
           }}
         ></input>
-        {/* <FontAwesomeIcon icon="fa-solid fa-magnifying-glass" /> */}
-        {/* add a clear / cross button */}
       </div>
 
-      {/* <div>
-        display buttons here
-        {displayGenerationButtons()}
-      </div> */}
       <div>
         <p>{displayGenerationStatement()}</p>
         <button
@@ -209,7 +132,6 @@ const Pokemon = ({ onAddToFavourites, onFavouriteClass, formatName }) => {
         >
           Generation 8
         </button>
-        {/* map buttons from BED? and set selected state / display somewhere */}
       </div>
 
       <div className="d-flex flex-wrap pokemon-grid">
@@ -228,7 +150,7 @@ const Pokemon = ({ onAddToFavourites, onFavouriteClass, formatName }) => {
                       "https://cdn.pixabay.com/photo/2016/09/01/09/31/pokemon-1635610_1280.png";
                   }}
                   className="card-image-top"
-                  alt={poke.name} // to consider better alt text, image is uncessary
+                  alt={poke.name} // to consider better alt text, stating 'image' is uncessary
                 ></img>
                 <div>
                   <Link to={pokeSlug(poke.url)} className="btn btn-link m-3">
@@ -237,16 +159,9 @@ const Pokemon = ({ onAddToFavourites, onFavouriteClass, formatName }) => {
 
                   <i
                     onClick={() => onAddToFavourites(poke)}
-                    // className={onFavouriteClass}
-                    // className={faveClass}
                     className={onFavouriteClass(poke.name)}
                   ></i>
-                  {/* <p>{pokeId(poke.url)}</p> */}
                 </div>
-                {/* <p>{poke.url}</p>
-                <p>{`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokeId(
-                  poke.url
-                )}.png`}</p> */}
               </div>
             </div>
           );

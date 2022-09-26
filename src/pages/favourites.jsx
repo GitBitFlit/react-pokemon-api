@@ -6,13 +6,6 @@ const Favourites = ({
   onRemoveFromFavourites,
   formatName,
 }) => {
-  // useEffect(() => {
-  //   localStorage.getItem("favouritePokemon", JSON.stringify(favouritePokemon));
-  // }, [favouritePokemon]);
-
-  // const formatName = (name) => {
-  //   return name.charAt(0).toUpperCase() + name.slice(1);
-  // };
 
   if (favouritePokemon.length === 0) {
     return (
