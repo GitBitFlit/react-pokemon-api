@@ -44,9 +44,20 @@ const Poke = ({ formatName }) => {
     fetch(`${pokeEndPoint}/${secondPokeId}`).then((res) => {
       res.json().then((data) => {
         setSecondPokeState(data);
-        console.log(secondPokeState, "2 poke selected");
+        console.log(data, "secondPokeState data");
+        console.log(secondPokeState, "secondPokeState");
       });
     });
+  };
+
+  const extractPokeId = (pokeUrl) => {
+    console.log(pokeUrl, "pokeURL");
+    if (!pokeUrl) {
+      return;
+    }
+    return pokeUrl.includes("pokemon-species")
+      ? pokeUrl.match(/(?<=pokemon-species\/)\d[^\/]*/)[0]
+      : pokeUrl.match(/(?<=pokemon\/)\d[^\/]*/)[0];
   };
 
   const formatHeightOrWeight = (value) => {
@@ -96,14 +107,14 @@ const Poke = ({ formatName }) => {
           </div>
           <div className="card m-3" style={{ width: 400 }}>
             <img
-              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${secondPokeState}.png`}
+              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${secondPokeState.id}.png`}
               onError={(e) => {
                 e.target.onError = null;
                 e.target.src =
                   "https://cdn.pixabay.com/photo/2016/09/01/09/31/pokemon-1635610_1280.png";
               }}
               className="card-image-top"
-              alt={secondPokeState.name} // to consider better alt text, stating 'image' is uncessary
+              alt={secondPokeState.name} // to consider better alt text, stating 'image' is unnecessary
             ></img>
 
             <table className="table">
