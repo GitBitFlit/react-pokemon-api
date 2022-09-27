@@ -50,16 +50,6 @@ const Poke = ({ formatName }) => {
     });
   };
 
-  const extractPokeId = (pokeUrl) => {
-    console.log(pokeUrl, "pokeURL");
-    if (!pokeUrl) {
-      return;
-    }
-    return pokeUrl.includes("pokemon-species")
-      ? pokeUrl.match(/(?<=pokemon-species\/)\d[^\/]*/)[0]
-      : pokeUrl.match(/(?<=pokemon\/)\d[^\/]*/)[0];
-  };
-
   const formatHeightOrWeight = (value) => {
     return (value / 10).toFixed(1);
   };
@@ -146,20 +136,22 @@ const Poke = ({ formatName }) => {
         <select className="m-3" onChange={handleSecondPokemonSelected}>
           {" "}
           <option>Pokemon</option>
-          {pokemonState?.map((poke) => {
-            return (
-              <option
-                key={poke.url}
-                value={
-                  poke.url.includes("pokemon-species")
-                    ? poke.url.match(/(?<=pokemon-species\/)\d[^\/]*/)[0]
-                    : poke.url.match(/(?<=pokemon\/)\d[^\/]*/)[0]
-                }
-              >
-                {formatName(poke.name)}
-              </option>
-            );
-          })}
+          {pokemonState
+            ?.filter((p) => p.name !== pokeState.name)
+            .map((poke) => {
+              return (
+                <option
+                  key={poke.url}
+                  value={
+                    poke.url.includes("pokemon-species")
+                      ? poke.url.match(/(?<=pokemon-species\/)\d[^\/]*/)[0]
+                      : poke.url.match(/(?<=pokemon\/)\d[^\/]*/)[0]
+                  }
+                >
+                  {formatName(poke.name)}
+                </option>
+              );
+            })}
           <option></option>
         </select>
       </div>
