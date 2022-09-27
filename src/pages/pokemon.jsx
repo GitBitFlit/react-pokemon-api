@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 // can update limit as required [1154]
 const pokemonEndPoint = "https://pokeapi.co/api/v2/pokemon?offset=0&limit=1154";
 
-const Pokemon = ({ onAddToFavourites, onFavouriteClass, formatName }) => {
+const Pokemon = ({ onAddToFavourites, onFavouriteClass, formatName, pokeId, pokeSlug }) => {
   const [pokemonState, setPokemonState] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedGeneration, setSelectedGeneration] = useState("All");
@@ -51,20 +51,6 @@ const Pokemon = ({ onAddToFavourites, onFavouriteClass, formatName }) => {
         setSelectedGeneration(g);
       });
     });
-  };
-
-  const pokeSlug = (pokeUrl) => {
-    return `/pokemon/${
-      pokeUrl.includes("pokemon-species")
-        ? pokeUrl.match(/(?<=pokemon-species\/)\d[^]*/)[0]
-        : pokeUrl.match(/(?<=pokemon\/)\d[^]*/)[0]
-    }`;
-  };
-
-  const pokeId = (pokeUrl) => {
-    return pokeUrl.includes("pokemon-species")
-      ? pokeUrl.match(/(?<=pokemon-species\/)\d[^\/]*/)[0]
-      : pokeUrl.match(/(?<=pokemon\/)\d[^\/]*/)[0];
   };
 
   var generations = [1, 2, 3, 4, 5, 6, 7, 8];

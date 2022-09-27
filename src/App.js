@@ -96,6 +96,20 @@ function App() {
     return name ? name.charAt(0).toUpperCase() + name.slice(1) : name;
   };
 
+  const pokeSlug = (pokeUrl) => {
+    return `/pokemon/${
+      pokeUrl.includes("pokemon-species")
+        ? pokeUrl.match(/(?<=pokemon-species\/)\d[^]*/)[0]
+        : pokeUrl.match(/(?<=pokemon\/)\d[^]*/)[0]
+    }`;
+  };
+
+  const pokeId = (pokeUrl) => {
+    return pokeUrl.includes("pokemon-species")
+      ? pokeUrl.match(/(?<=pokemon-species\/)\d[^\/]*/)[0]
+      : pokeUrl.match(/(?<=pokemon\/)\d[^\/]*/)[0];
+  };
+
   return (
     <>
       <NavBar />
@@ -122,6 +136,8 @@ function App() {
               onAddToFavourites={(poke) => handleAddToFavourites(poke)}
               onFavouriteClass={(poke) => onFavouriteClass(poke)}
               formatName={(name) => formatName(name)}
+              pokeId={(pokeUrl) => pokeId(pokeUrl)}
+              pokeSlug={(pokeUrl) => pokeSlug(pokeUrl)}
             />
           }
         />
