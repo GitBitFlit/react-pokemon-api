@@ -66,30 +66,7 @@ const Pokemon = ({ onAddToFavourites, onFavouriteClass, formatName }) => {
       : pokeUrl.match(/(?<=pokemon\/)\d[^\/]*/)[0];
   };
 
-  const displayGenerationStatements = () => {
-    for (let i = 1; i < 9; i++) {
-      return (
-        <button
-          onClick={() => handleGenerationSelected(Number(i))}
-          className="btn btn-info m-2"
-        >
-          Generation {i}
-        </button>
-      );
-    }
-  };
-
   var generations = [1, 2, 3, 4, 5, 6, 7, 8];
-  // var generationButtons = "";
-  // for (let g = 0; g < generations.length; g++) {
-  //   generationButtons += `
-  //   <button
-  //     onClick={() => handleGenerationSelected(i)}
-  //     className="btn btn-info m-2"
-  //   >
-  //     Generation {i}
-  //   </button>`;
-  // }
 
   return (
     <>
@@ -107,6 +84,8 @@ const Pokemon = ({ onAddToFavourites, onFavouriteClass, formatName }) => {
         ></input>
       </div>
 
+      <div>{displayGenerationStatement()}</div>
+
       <div>
         {generations.map((g) => {
           return (
@@ -119,60 +98,6 @@ const Pokemon = ({ onAddToFavourites, onFavouriteClass, formatName }) => {
             </button>
           );
         })}
-      </div>
-
-      <div>{displayGenerationStatements()}</div>
-
-      <div>
-        <p>{displayGenerationStatement()}</p>
-        <button
-          onClick={() => handleGenerationSelected(1)}
-          className="btn btn-dark m-2"
-        >
-          Generation 1
-        </button>
-        <button
-          onClick={() => handleGenerationSelected(2)}
-          className="btn btn-dark m-2"
-        >
-          Generation 2
-        </button>
-        <button
-          onClick={() => handleGenerationSelected(3)}
-          className="btn btn-dark m-2"
-        >
-          Generation 3
-        </button>
-        <button
-          onClick={() => handleGenerationSelected(4)}
-          className="btn btn-dark m-2"
-        >
-          Generation 4
-        </button>
-        <button
-          onClick={() => handleGenerationSelected(5)}
-          className="btn btn-dark m-2"
-        >
-          Generation 5
-        </button>
-        <button
-          onClick={() => handleGenerationSelected(6)}
-          className="btn btn-dark m-2"
-        >
-          Generation 6
-        </button>
-        <button
-          onClick={() => handleGenerationSelected(7)}
-          className="btn btn-dark m-2"
-        >
-          Generation 7
-        </button>
-        <button
-          onClick={() => handleGenerationSelected(8)}
-          className="btn btn-dark m-2"
-        >
-          Generation 8
-        </button>
       </div>
 
       <div className="d-flex flex-wrap pokemon-grid">
