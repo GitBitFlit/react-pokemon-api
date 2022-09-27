@@ -20,6 +20,7 @@ const Pokemon = ({ onAddToFavourites, onFavouriteClass, formatName }) => {
 
   let filteredPokemon = pokemonState;
   if (searchQuery) {
+    // setSelectedGeneration("All");
     filteredPokemon = pokemonState.filter((pokemon) =>
       pokemon.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
